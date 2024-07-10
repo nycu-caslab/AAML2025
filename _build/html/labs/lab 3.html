@@ -1,0 +1,914 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab3: Systolic array &#8212; CSIC30066: Accelerator Architectures for Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab 3';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lab4: im2col" href="lab%204.html" />
+    <link rel="prev" title="Lab2: SIMD and Quantization" href="lab%202.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">CSIC30066: Accelerator Architectures for Machine Learning</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Class:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../class/staff.html">Staff</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lab%201.html">Lab1: CFU-Playground Environment Setup &amp; Porting KWS model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab%202.html">Lab2: SIMD and Quantization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab3: Systolic array</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab%204.html">Lab4: im2col</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab%205.html">Lab5: Get It Together</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/labs/lab 3.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab3: Systolic array</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goals-of-this-lab">Goals of this lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intended-learning-outcomes">Intended Learning Outcomes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#systolic-array-implementation">Systolic Array Implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisite">Prerequisite</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interface">Interface</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specification">Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#module-specification">Module Specification</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rules">Rules</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-lab-1-exercise-20">Basic Lab 1 Exercise -20%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-lab-2-exercise-20">Basic Lab 2 Exercise -20%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-lab-3-exercise-30">Basic Lab 3 Exercise -30%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-lab-1-exercise-30">Advanced Lab 1 Exercise -30%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#block-digram">Block digram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-waveform">Example-Waveform</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-mapping-type-a-with-transpose">Memory Mapping - Type A(with transpose)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-mapping-type-b-without-transpose">Memory Mapping - Type B (without transpose)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="lab3-systolic-array">
+<h1>Lab3: Systolic array<a class="headerlink" href="#lab3-systolic-array" title="Link to this heading">#</a></h1>
+<section id="goals-of-this-lab">
+<h2>Goals of this lab<a class="headerlink" href="#goals-of-this-lab" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#basic-lab-1-exercise-20">Basic Lab 1 Exercise -20%</a></p></li>
+<li><p><a class="reference external" href="#basic-lab-2-exercise-20">Basic Lab 2 Exercise -20%</a></p></li>
+<li><p><a class="reference external" href="#basic-lab-3-exercise-30">Basic Lab 3 Exercise -30%</a></p></li>
+<li><p><a class="reference external" href="#advanced-lab-1-exercise-30">Advanced Lab 1 Exercise -30%</a></p></li>
+</ul>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>The systolic array used by Google Tensor Processing Unit (TPU)
+accelerates the matrix computation by using the dataflow operation. The
+systolic array contains multiple processing elements (PEs), each of them
+is responsible for the multiply–and-accumulate (MAC) operation. Unlike
+the scalar CPU, the systolic array can performs multiple elements in a
+matrix simultaneously and achieves high computational throughput.
+Furthermore, the dataflow computing used by the systolic array stores
+the reused data within the register of each PE and decreases the amount
+of data movement between on-chip and off-chip memory.</p>
+<p>In this Lab, we will use Verilog to implement the PE and a small
+systolic array composed of 4 x 4 PEs. In addition, there is a lab that
+will ask students to realize the dataflow stationary policy (weight and
+output stationary) on the systolic array to perform matrix multiply
+often used in AI models. (Hint: The weight stationary is more
+complicated than output stationary.)</p>
+<ul class="simple">
+<li><p>Output Stationary</p></li>
+<li><p>Weight Stationary</p></li>
+</ul>
+</section>
+<section id="intended-learning-outcomes">
+<h2>Intended Learning Outcomes<a class="headerlink" href="#intended-learning-outcomes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Understand the systolic array architecture and the dataflow used by
+the systolic array</p></li>
+<li><p>Using the Verilog Programming to implement processing element (PE),
+and a 4 x 4 systolic array composed of the dataflow processing</p></li>
+</ul>
+</section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>The Google TPU uses 256 x 256 PE array to create a highly parallel
+computing with 8-bit integer data type. The TPU outperforms current GPU
+and CPU. It mainly accelerate the Matrix Multiply, so we will need to
+implement the matrix multiply algorithm by using the systolic dataflow.</p>
+<p>Let review the Matrix Multiply learning from senior high school. For
+three matrix A(M,K), B(K,N) and C(M,N),that is, C = A ∗ B, Here is the
+pseudo of MM algorithm that you already know.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="p">;</span><span class="w"> </span><span class="n">m</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">C</span><span class="p">[</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Code 1: Matrix Multiplication in Weight Stationary</p>
+<p>This particular dataflow is called a Weight-stationary dataflow, since
+the weight element remain constant until the next row to be computed</p>
+</section>
+<section id="systolic-array-implementation">
+<h2>Systolic Array Implementation<a class="headerlink" href="#systolic-array-implementation" title="Link to this heading">#</a></h2>
+<p>The goals of this lab are to familiarize
+you with the concepts of dataflows in systolic array architectures. This
+will get you hand-on experience with dataflow routing and processing
+elements implementations. In this lab, you only need to construct the
+TPU module.</p>
+<section id="prerequisite">
+<h3>Prerequisite<a class="headerlink" href="#prerequisite" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Python3 with numpy library installed</p></li>
+<li><p>iverilog or ncverilog or vivado</p></li>
+<li><p>Makefile</p></li>
+</ul>
+</section>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h3>
+<p>You need to perform Matrix multiplication
+with one of dataflow stationary method with correct functional
+simulation in 4x4 Processing elements(PEs). That is this design can
+perform (4*K)*(K*4) 8-bit integer matrix multiplication.</p>
+<ol class="arabic simple">
+<li><p>Your design should be written in the Verilog language. There is no
+limitation in how you program your design.</p></li>
+<li><p>Your PEs shouldn’t more than 4x4, where a 2D systolic array
+architecture is recommended.</p></li>
+<li><p>An 8-bits input data, 32-bits accumulated data design. Please be
+careful with the bit-width problem.</p></li>
+<li><p>(1024 + 256 ∗ 2) KiBytes in total of global buffer size.</p></li>
+</ol>
+</section>
+<section id="getting-started">
+<h3>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h3>
+<p>This lab will require a beginner’s level of verilog.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/nycu-caslab/AAML2023-Lab3.git</span></code></p>
+</div>
+</section>
+<section id="interface">
+<h3>Interface<a class="headerlink" href="#interface" title="Link to this heading">#</a></h3>
+<p>Tabel 1: The control signals</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>I/O</p></th>
+<th class="head"><p>Signal name</p></th>
+<th class="head"><p>Bit width</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Input</p></td>
+<td><p>clk</p></td>
+<td><p>1</p></td>
+<td><p>The clock
+signal</p></td>
+</tr>
+<tr class="row-odd"><td><p>Input</p></td>
+<td><p>rst_n</p></td>
+<td><p>1</p></td>
+<td><p>The reset
+signal,
+which is
+active low.</p></td>
+</tr>
+<tr class="row-even"><td><p>Input</p></td>
+<td><p>in_valid</p></td>
+<td><p>1</p></td>
+<td><p>The input
+is valid
+when
+in_valid is
+high and
+will only
+high for
+one cycle.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Input</p></td>
+<td><p>K</p></td>
+<td><p>8</p></td>
+<td><p>dimension K
+of the
+matrix
+(M,K),
+(K,N)</p></td>
+</tr>
+<tr class="row-even"><td><p>Input</p></td>
+<td><p>M</p></td>
+<td><p>8</p></td>
+<td><p>dimension K
+of the
+matrix
+(M,K),
+(K,N)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Input</p></td>
+<td><p>N</p></td>
+<td><p>8</p></td>
+<td><p>dimension K
+of the
+matrix
+(M,K),
+(K,N)</p></td>
+</tr>
+<tr class="row-even"><td><p>Output</p></td>
+<td><p>busy</p></td>
+<td><p>1</p></td>
+<td><p>High when
+the design
+is busy.
+Pattern
+will check
+your answer
+when busy
+is low
+after every
+in_valid.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Tabel 2: The SRAM interface of A and B SRAM</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>I/O</p></th>
+<th class="head"><p>Signal name</p></th>
+<th class="head"><p>Bit width</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Input</p></td>
+<td><p>wr_en</p></td>
+<td><p>1</p></td>
+<td><p>The write enable signal.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Input</p></td>
+<td><p>index</p></td>
+<td><p>16</p></td>
+<td><p>The address of the sram to be read or write.</p></td>
+</tr>
+<tr class="row-even"><td><p>Input</p></td>
+<td><p>data_in</p></td>
+<td><p>32</p></td>
+<td><p>The data input to write to the SRAM</p></td>
+</tr>
+<tr class="row-odd"><td><p>Output</p></td>
+<td><p>data_out</p></td>
+<td><p>32</p></td>
+<td><p>The data output from the SRAM</p></td>
+</tr>
+</tbody>
+</table>
+<p>Tabel 3: The SRAM interface of C SRAM</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>I/O</p></th>
+<th class="head"><p>Signal name</p></th>
+<th class="head"><p>Bit width</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Input</p></td>
+<td><p>wr_en</p></td>
+<td><p>1</p></td>
+<td><p>The write enable signal.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Input</p></td>
+<td><p>index</p></td>
+<td><p>16</p></td>
+<td><p>The address of the sram to be read or write.</p></td>
+</tr>
+<tr class="row-even"><td><p>Input</p></td>
+<td><p>data_in</p></td>
+<td><p>128</p></td>
+<td><p>The data input to write to the SRAM</p></td>
+</tr>
+<tr class="row-odd"><td><p>Output</p></td>
+<td><p>data_out</p></td>
+<td><p>128</p></td>
+<td><p>The data output from the SRAM</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="specification">
+<h3>Specification<a class="headerlink" href="#specification" title="Link to this heading">#</a></h3>
+<section id="module-specification">
+<h4>Module Specification<a class="headerlink" href="#module-specification" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>Top module: TPU (filename: TPU.V)</p></li>
+<li><p>Input Pins: clk, rst_n, in_valid, K, M, N</p></li>
+<li><p>Output Pins: busy, [ABC]_wr_en, [ABC]_index, [ABC]_data_in,
+[ABC]_data_out</p></li>
+</ol>
+</section>
+<section id="rules">
+<h4>Rules<a class="headerlink" href="#rules" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>Your TPU design should be under the top module which provided by TA.</p></li>
+<li><p>Pattern module includes three global buffers prepared for your TPU.
+Two of the global buffers have its own read write port,
+256x256x32bit=256 KiBytes size and the final one for you to write
+back the data has 256x256x128bit=1024 KiBytes. For the detail of the
+mapping of matrix into global buffer. Please refer to the
+<a class="reference external" href="#appendix">Appendix</a> . There are two types of mapping. Type A
+for matrix A, and Type B for matrix B and C.</p></li>
+<li><p>At the start of the simulation, testbench will load the global
+buffer A &amp; B, which assume that CPU or DMA has already prepared the
+data for TPU in global buffer. When signal in_valid==1, the size of
+the two matrices will be available for TPU (m, n, k) for only one
+cycle.</p></li>
+<li><p>Testbench will compare your output global buffer with golden, when
+you finish the calculation, that is (busy==0). Then you need to wait
+for the next in_valid for the next test case.</p></li>
+<li><p>You should implement your own data loader, process elements(PEs),
+and controller which schedule the data in global buffer A &amp; B to be
+calculated in the systolic array.</p></li>
+<li><p>You need to <strong>set busy to high immediately after in_valid fall from
+high to low</strong>.</p></li>
+<li><p>Cannot modify the name of input or output port.</p></li>
+<li><p>Use <strong>asynchronous reset active low</strong> architecture</p></li>
+<li><p>All your output register <strong>should set to zero after reset</strong>.</p></li>
+<li><p>The execution latency is limited in <strong>1500000</strong> cycles.</p></li>
+<li><p>Don’ t write Chinese comments or other language comments in the file
+you turned in.</p></li>
+<li><p>Don’t use any wire/reg/submodule/parameter name called <em>error</em>,
+*congratulation*, *latch* or *fail* otherwise you will fail the
+lab. Note: * means any char in front of or behind the word. e.g:
+error_note is forbidden</p></li>
+</ol>
+</section>
+</section>
+<section id="basic-lab-1-exercise-20">
+<h3>Basic Lab 1 Exercise -20%<a class="headerlink" href="#basic-lab-1-exercise-20" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>Objective:</p>
+<ul class="simple">
+<li><p>Designs of dataflow in TPU</p></li>
+<li><p>Data reuse method</p></li>
+</ul>
+</li>
+<li><p>Input:</p>
+<ul class="simple">
+<li><p>A matrix and B matrix which size are 2*2</p></li>
+<li><p>control signal(datail in table1,2,3)</p></li>
+</ul>
+</li>
+<li><p>Output:</p>
+<ul class="simple">
+<li><p>the 2*2 C matrix of A matrix * B matrix</p></li>
+</ul>
+</li>
+<li><p>Steps:</p>
+<ol class="arabic simple">
+<li><p>take data from global buffer</p></li>
+<li><p>use the data from global buffer to calculate with PEs</p></li>
+<li><p>output the result to C global buffer</p></li>
+<li><p>make verif1 10 test cases of A(2*2) * B(2*2)</p></li>
+</ol>
+</li>
+<li><p>Validation</p>
+<ul class="simple">
+<li><p>type this in command line</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>nWave &amp;</p>
+</div>
+<ul class="simple">
+<li><p>check the waveform with nWave, and the waveform will be like <a class="reference external" href="#example-waveform">this</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="basic-lab-2-exercise-20">
+<h3>Basic Lab 2 Exercise -20%<a class="headerlink" href="#basic-lab-2-exercise-20" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>input:</p>
+<ul>
+<li><p>A matrix and B matrix which size are 4*4</p></li>
+<li><p>control signal(datail in table1,2,3)</p></li>
+</ul>
+</li>
+<li><p>output:</p>
+<ul>
+<li><p>the 4*4 C matrix of A matrix * B matrix</p></li>
+</ul>
+</li>
+<li><p>steps:</p>
+<ol class="arabic simple">
+<li><p>refer to Basic Lab1</p></li>
+<li><p>make verif2 10 test cases of A(4*4) * B(4*4)</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="basic-lab-3-exercise-30">
+<h3>Basic Lab 3 Exercise -30%<a class="headerlink" href="#basic-lab-3-exercise-30" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>input:</p>
+<ul>
+<li><p>A matrix and B matrix which size are 4*K and K*4 separately</p></li>
+<li><p>control signal(datail in table1,2,3)</p></li>
+</ul>
+</li>
+<li><p>output:</p>
+<ul>
+<li><p>the 4*4 C matrix of A matrix * B matrix</p></li>
+</ul>
+</li>
+<li><p>steps:</p>
+<ol class="arabic simple">
+<li><p>refer to Basic Lab1</p></li>
+<li><p>make verif3 10 test cases of A(4*K) * B(K*4)</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="advanced-lab-1-exercise-30">
+<h3>Advanced Lab 1 Exercise -30%<a class="headerlink" href="#advanced-lab-1-exercise-30" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>input:</p>
+<ul>
+<li><p>A matrix and B matrix which size are M*K and K*N separately</p></li>
+<li><p>control signal(datail in table1,2,3)</p></li>
+</ul>
+</li>
+<li><p>output:</p>
+<ul>
+<li><p>the M*N C matrix of A matrix * B matrix</p></li>
+</ul>
+</li>
+<li><p>steps:</p>
+<ol class="arabic simple">
+<li><p>refer to Basic Lab1</p></li>
+<li><p>make real 100 test cases of A(M*K) * B(K*N), where M, K, N ∈ [4,
+256)</p></li>
+</ol>
+</li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Hint : you can take data and calculate at the same time or you will
+exceed cycles</p>
+</div>
+</section>
+<section id="block-digram">
+<h3>Block digram<a class="headerlink" href="#block-digram" title="Link to this heading">#</a></h3>
+<img alt="../_images/rJN3oxSi2.png" src="../_images/rJN3oxSi2.png" />
+<p>Figure 1: Top Architecture</p>
+</section>
+<section id="example-waveform">
+<h3>Example-Waveform<a class="headerlink" href="#example-waveform" title="Link to this heading">#</a></h3>
+<img alt="../_images/ryu1TlHih.png" src="../_images/ryu1TlHih.png" />
+<p>Figure 2: The example of input waveform</p>
+</section>
+<section id="appendix">
+<h3>Appendix<a class="headerlink" href="#appendix" title="Link to this heading">#</a></h3>
+<section id="memory-mapping-type-a-with-transpose">
+<h4>Memory Mapping - Type A(with transpose)<a class="headerlink" href="#memory-mapping-type-a-with-transpose" title="Link to this heading">#</a></h4>
+<img alt="../_images/S18IElrj2.png" src="../_images/S18IElrj2.png" />
+<p>Figure 3: Matrix mapping type A</p>
+</section>
+<section id="memory-mapping-type-b-without-transpose">
+<h4>Memory Mapping - Type B (without transpose)<a class="headerlink" href="#memory-mapping-type-b-without-transpose" title="Link to this heading">#</a></h4>
+<img alt="../_images/BJYR4gSo3.png" src="../_images/BJYR4gSo3.png" />
+<p>Figure 4: Matrix mapping type B</p>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lab%202.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab2: SIMD and Quantization</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lab%204.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab4: im2col</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goals-of-this-lab">Goals of this lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intended-learning-outcomes">Intended Learning Outcomes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#systolic-array-implementation">Systolic Array Implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisite">Prerequisite</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interface">Interface</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specification">Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#module-specification">Module Specification</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rules">Rules</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-lab-1-exercise-20">Basic Lab 1 Exercise -20%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-lab-2-exercise-20">Basic Lab 2 Exercise -20%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-lab-3-exercise-30">Basic Lab 3 Exercise -30%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-lab-1-exercise-30">Advanced Lab 1 Exercise -30%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#block-digram">Block digram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-waveform">Example-Waveform</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-mapping-type-a-with-transpose">Memory Mapping - Type A(with transpose)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-mapping-type-b-without-transpose">Memory Mapping - Type B (without transpose)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By  NYCU CAS-Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, NYCU CAS-Lab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
