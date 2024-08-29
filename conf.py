@@ -28,6 +28,12 @@ author = ' NYCU CAS-Lab'
 # ones.
 extensions = ['myst_parser']
 
+myst_enable_extensions = [
+    "colon_fence",
+    "html_image",
+    "amsmath"
+]
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -47,9 +53,3 @@ html_theme = 'sphinx_book_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'markdown',
-    '.md': 'markdown',
-}

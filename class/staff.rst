@@ -5,7 +5,7 @@ Instructor
 **Tsung Tai Yeh**
 
 * Email: ttyeh [at] cs.nycu.edu.tw
-* Location: EC707
+* Location: EC516
 
 Teaching assistants
 *******************
@@ -15,3 +15,7 @@ Teaching assistants
 * en.cs10 [at] nycu.edu.tw
 * Location: EC619
 
+**Cheng-Han Tsai**
+
+* charlestsai1729.cs10 [at] nycu.edu.tw
+* Location: EC619

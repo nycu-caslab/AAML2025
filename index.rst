@@ -1,12 +1,8 @@
 Welcome to Accelerator Architectures for Machine Learning, Fall 2024!
-=====================================================================
-
-This course aims to introduce the design and implementation of AI Accelerator.
-You'll learn both concept and implementation from a series of labs.
-
+======================================================================
 
 Lecture and Office Hours
-========================
+------------------------
 
 .. table::
    :widths: auto
@@ -14,9 +10,9 @@ Lecture and Office Hours
    +--------------------+------------------------------+-----------------------------------------------------------+
    | Title              | Time                         | Location                                                  |
    +====================+==============================+===========================================================+
-   | Lectures           | 13:20 - 15:10 pm (Thur.)     | EC-016                                                    |
+   | Lectures           | 10:20 - 12:00 am (Thur.)     | EC-302                                                    |
    +--------------------+------------------------------+-----------------------------------------------------------+
-   | Office Hours       | 5:00 - 6:00 pm (Mon.)        | EC-707                                                    |
+   | Office Hours       | 9:00 - 10:00 am (Thur.)      | EC-516                                                    |
    +--------------------+------------------------------+-----------------------------------------------------------+
    | Lecture Website    | `Link <https://people.cs.nycu.edu.tw/~ttyeh/course/2024_Fall/IOC5009/outline.html>`_     |
    +--------------------+------------------------------------------------------------------------------------------+
@@ -25,6 +21,12 @@ Lecture and Office Hours
   Check the `lecture website`_ for the schedule and the lecture slides!
 .. _lecture website: https://people.cs.nycu.edu.tw/~ttyeh/course/2024_Fall/IOC5009/outline.html
 
+.. important::
+  Please make sure to join the course's Discord channel via the invitation link to receive announcements and participate in discussions.
+  
+  If you have any course-related questions, please try to ask directly in the Discord channel rather than emailing the TAs. For issues related to grades or other privacy concerns, you can either send a private message to the TAs on Discord or email them.
+  
+  `Invitation Link <https://discord.gg/AnXZycwqVX>`_
 
 .. toctree::
     :hidden:
