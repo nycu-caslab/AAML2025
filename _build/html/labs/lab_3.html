@@ -326,6 +326,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-mapping-type-b-without-transpose">Memory Mapping - Type B (without transpose)</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
 </ul>
             </nav>
         </div>
@@ -355,6 +356,10 @@ document.write(`
 <p>The systolic array used by Google Tensor Processing Unit (TPU) accelerates the matrix computation by using the dataflow operation. The systolic array contains multiple processing elements (PEs), each of them is responsible for the multiply–and-accumulate (MAC) operation. It can performs multiple elements in a matrix simultaneously and achieves high computational throughput.</p>
 <p>In this lab, we will use Verilog to implement the PE and a small systolic array composed of 4 x 4 PEs. You may refer to different dataflow stationary policy (e.g. weight and output stationary).</p>
 <p>(Hint: The weight stationary is more complicated than output stationary.)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This lab does not require demonstration, submit your code to E3 only, details are in <a class="reference internal" href="#submission"><span class="xref myst">Submission</span></a>.</p>
+</div>
 </section>
 <section id="systolic-array-implementation">
 <h2>Systolic Array Implementation<a class="headerlink" href="#systolic-array-implementation" title="Link to this heading">#</a></h2>
@@ -397,7 +402,8 @@ gtkwave TPU.vcd
 <section id="interface-and-block-diagram">
 <h3>Interface and Block Diagram<a class="headerlink" href="#interface-and-block-diagram" title="Link to this heading">#</a></h3>
 <p><strong>Block Diagram</strong></p>
-<a class="reference internal image-reference" href="../_images/block_diagram-2.png"><img alt="../_images/block_diagram-2.png" src="../_images/block_diagram-2.png" style="width: 560px;" /></a>
+<a class="reference internal image-reference" href="../_images/block_diagram-2.png"><img alt="../_images/block_diagram-2.png" src="../_images/block_diagram-2.png" style="width: 560px;" />
+</a>
 <p><strong>Tabel 1: The control signals</strong></p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -655,18 +661,41 @@ gtkwave TPU.vcd
 <p>The matrix A in global buffer A is placed with a transposed style, and other spaces are all 0-padded
 <a class="reference internal" href="https://hackmd.io/_uploads/S18IElrj2.png"><img alt="https://hackmd.io/_uploads/S18IElrj2.png" src="https://hackmd.io/_uploads/S18IElrj2.png" style="width: 660px;" /></a></p>
 <p>Example of a 10 * 7 matrix</p>
-<a class="reference internal image-reference" href="../_images/A_3.png"><img alt="../_images/A_3.png" src="../_images/A_3.png" style="width: 660px;" /></a>
+<a class="reference internal image-reference" href="../_images/A_3.png"><img alt="../_images/A_3.png" src="../_images/A_3.png" style="width: 660px;" />
+</a>
 <p>the memory layout of this matrix looks like (note the transpose in the layout)</p>
-<a class="reference internal image-reference" href="../_images/A_4.png"><img alt="../_images/A_4.png" src="../_images/A_4.png" style="width: 150px;" /></a>
+<a class="reference internal image-reference" href="../_images/A_4.png"><img alt="../_images/A_4.png" src="../_images/A_4.png" style="width: 150px;" />
+</a>
 </section>
 <section id="memory-mapping-type-b-without-transpose">
 <h3>Memory Mapping - Type B (without transpose)<a class="headerlink" href="#memory-mapping-type-b-without-transpose" title="Link to this heading">#</a></h3>
-<a class="reference internal image-reference" href="https://hackmd.io/_uploads/BJYR4gSo3.png"><img alt="https://hackmd.io/_uploads/BJYR4gSo3.png" src="https://hackmd.io/_uploads/BJYR4gSo3.png" style="width: 660px;" /></a>
+<a class="reference internal image-reference" href="https://hackmd.io/_uploads/BJYR4gSo3.png"><img alt="https://hackmd.io/_uploads/BJYR4gSo3.png" src="https://hackmd.io/_uploads/BJYR4gSo3.png" style="width: 660px;" />
+</a>
 <p>The matrix B looks more forward in memory layout, for example, a 7 * 9 matrix</p>
-<a class="reference internal image-reference" href="../_images/B_1.png"><img alt="../_images/B_1.png" src="../_images/B_1.png" style="width: 660px;" /></a>
+<a class="reference internal image-reference" href="../_images/B_1.png"><img alt="../_images/B_1.png" src="../_images/B_1.png" style="width: 660px;" />
+</a>
 <p>looks like this in global buffer B, with 0-padded also</p>
-<a class="reference internal image-reference" href="../_images/B_2.png"><img alt="../_images/B_2.png" src="../_images/B_2.png" style="width: 150px;" /></a>
+<a class="reference internal image-reference" href="../_images/B_2.png"><img alt="../_images/B_2.png" src="../_images/B_2.png" style="width: 150px;" />
+</a>
 </section>
+</section>
+<section id="submission">
+<h2>Submission<a class="headerlink" href="#submission" title="Link to this heading">#</a></h2>
+<hr class="docutils" />
+<p>Please organize your submission files into a zip archive structured as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>YourID.zip
+    └── YourID/
+        ├── TPU.v
+        ├── systolic_array.v
+        ├── PE.v
+        └── other files...
+</pre></div>
+</div>
+<p>Make sure your files are well included!</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>TAs should be able to run your project without any modification. If TAs cannot compile or run your code, <strong>you can’t get any scores even if you passed the DEMO</strong>. Also, <strong>PLAGIARISM is not allowed</strong>.</p>
+</div>
 </section>
 </section>
 
@@ -734,6 +763,7 @@ gtkwave TPU.vcd
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-mapping-type-b-without-transpose">Memory Mapping - Type B (without transpose)</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
 </ul>
   </nav></div>
 

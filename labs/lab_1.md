@@ -109,6 +109,12 @@ export PATH=$PATH:$HOME/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ub
     ![](https://hackmd.io/_uploads/SyXH5fA6n.png)
     ![](https://hackmd.io/_uploads/rJhYcfAa3.png)
 
+```{hint}
+If you are doing this on a remote server and can't physically access the "CPU_RESET" button, press "enter" and key in "reboot" instead of pressing the "CPU_RESET".
+
+<img src="images/lab1/litex.png" width="150px">
+
+```
 
 ## Porting the KWS model - 60%
 -----
@@ -394,8 +400,11 @@ You will receive all 15 points as long as you measure it correctly.
      38970M (  38970422645 )  cycles total
     
 ```
-
+## Submission
 ---
+Since this lab is all about setting up the enviornment, you **DO NOT** have to submit anything to E3.
+
 ### Reference
+---
 
 - [CFU-Playground](https://cfu-playground.readthedocs.io/en/latest/index.html)

@@ -14,6 +14,9 @@ The systolic array used by Google Tensor Processing Unit (TPU) accelerates the m
 In this lab, we will use Verilog to implement the PE and a small systolic array composed of 4 x 4 PEs. You may refer to different dataflow stationary policy (e.g. weight and output stationary). 
 
 (Hint: The weight stationary is more complicated than output stationary.)
+```{note}
+This lab does not require demonstration, submit your code to E3 only, details are in [Submission](#submission).
+```
 
 ## Systolic Array Implementation
 ---
@@ -198,4 +201,20 @@ looks like this in global buffer B, with 0-padded also
 
 <img src="images/lab3/B_2.png" width="150px">
 
+## Submission
+---
 
+Please organize your submission files into a zip archive structured as follows:
+```
+YourID.zip
+    └── YourID/
+        ├── TPU.v
+        ├── systolic_array.v
+        ├── PE.v
+        └── other files...
+```
+
+Make sure your files are well included!
+```{important}
+TAs should be able to run your project without any modification. If TAs cannot compile or run your code, **you can't get any scores even if you passed the DEMO**. Also, **PLAGIARISM is not allowed**.
+```
