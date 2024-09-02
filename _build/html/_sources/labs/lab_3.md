@@ -216,5 +216,5 @@ YourID.zip
 
 Make sure your files are well included!
 ```{important}
-TAs should be able to run your project without any modification. If TAs cannot compile or run your code, **you can't get any scores even if you passed the DEMO**. Also, **PLAGIARISM is not allowed**.
+TAs should be able to run your project without any modification. If TAs cannot compile or run your code, **you can't get any scores**. Also, **PLAGIARISM is not allowed**.
 ```

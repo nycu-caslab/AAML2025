@@ -310,9 +310,9 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal-of-this-lab">Goal of this lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-and-profiling-the-models-20">Porting and Profiling the Models - 20%</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-the-new-models-10">Porting the New Models - 10%</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-the-mobilevit-10">Profiling the MobileViT - 10%</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-and-profiling-the-models-10">Porting and Profiling the Models - 10%</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-the-new-models-5">Porting the New Models - 5%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-the-mobilevit-5">Profiling the MobileViT - 5%</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerating-the-logistic-function-60">Accelerating the Logistic Function - 60%</a><ul class="nav section-nav flex-column">
@@ -329,6 +329,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Guide</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-in-the-demo-10">Questions in the Demo - 10%</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
 </ul>
             </nav>
@@ -347,9 +348,10 @@ document.write(`
 <h2>Goal of this lab<a class="headerlink" href="#goal-of-this-lab" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><a class="reference internal" href="#porting-and-profiling-the-models-20"><span class="xref myst">Porting and Profiling the Models - 20%</span></a></p></li>
+<li><p><a class="reference internal" href="#porting-and-profiling-the-models-20"><span class="xref myst">Porting and Profiling the Models - 10%</span></a></p></li>
 <li><p><a class="reference internal" href="#accelerating-the-logistic-function-60"><span class="xref myst">Accelerating the Logistic Function - 60%</span></a></p></li>
 <li><p><a class="reference internal" href="#accelerating-the-softmax-function-20"><span class="xref myst">Accelerating the Softmax Function - 20%</span></a></p></li>
+<li><p><a class="reference internal" href="#questions-in-the-demo-10"><span class="xref myst">Questions in the Demo - 10%</span></a></p></li>
 </ul>
 </section>
 <section id="introduction">
@@ -357,11 +359,11 @@ document.write(`
 <hr class="docutils" />
 <p>Modern models frequently utilize specialized activation functions that involve complex mathematical computations, such as exponentials, square roots, and reciprocals. Unlike simpler functions like ReLU, these sophisticated operations can become bottlenecks during model inference. In this lab, we will design an element-wise unit specifically for enhancing the inference speed of the <strong>Logistic</strong> and <strong>Softmax</strong> functions in the <strong>MobileViT</strong> model.</p>
 </section>
-<section id="porting-and-profiling-the-models-20">
-<h2>Porting and Profiling the Models - 20%<a class="headerlink" href="#porting-and-profiling-the-models-20" title="Link to this heading">#</a></h2>
+<section id="porting-and-profiling-the-models-10">
+<h2>Porting and Profiling the Models - 10%<a class="headerlink" href="#porting-and-profiling-the-models-10" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
-<section id="porting-the-new-models-10">
-<h3>Porting the New Models - 10%<a class="headerlink" href="#porting-the-new-models-10" title="Link to this heading">#</a></h3>
+<section id="porting-the-new-models-5">
+<h3>Porting the New Models - 5%<a class="headerlink" href="#porting-the-new-models-5" title="Link to this heading">#</a></h3>
 <p>In this lab, we will provide you two models:</p>
 <ol class="arabic">
 <li><p>Logistic Test Model</p>
@@ -421,8 +423,8 @@ document.write(`
 </div></blockquote>
 <p>After completing these steps, you should be able to run the two new models and obtain the scores for this section.</p>
 </section>
-<section id="profiling-the-mobilevit-10">
-<h3>Profiling the MobileViT - 10%<a class="headerlink" href="#profiling-the-mobilevit-10" title="Link to this heading">#</a></h3>
+<section id="profiling-the-mobilevit-5">
+<h3>Profiling the MobileViT - 5%<a class="headerlink" href="#profiling-the-mobilevit-5" title="Link to this heading">#</a></h3>
 <p>After executing the MobileViT model, you may notice that the inference process is quite slow. Please <strong>analyze and compare the time consumed by each operation</strong>, with particular attention to the <strong>activation functions</strong>. You may present your analysis in any format, such as <strong>a table or a pie chart</strong>. Additionally, you have the option to use data with or without SIMD MAC acceleration.</p>
 <p>Here is an example of a pie chart:<br />
 <a class="reference internal" href="../_images/pie_example.png"><img alt="../_images/pie_example.png" src="../_images/pie_example.png" style="width: 600px;" /></a></p>
@@ -651,6 +653,10 @@ Perf counters not enabled.
 </div>
 </section>
 </section>
+<section id="questions-in-the-demo-10">
+<h2>Questions in the Demo - 10%<a class="headerlink" href="#questions-in-the-demo-10" title="Link to this heading">#</a></h2>
+<p>You will be asked several questions about the concepts covered in this lab and your implementation. This section accounts for 10% of the total lab score.</p>
+</section>
 <section id="submission">
 <h2>Submission<a class="headerlink" href="#submission" title="Link to this heading">#</a></h2>
 <p>You need to hand in your <strong>CFU-Playground project folder</strong> without the <code class="docutils literal notranslate"><span class="pre">build</span></code> folder and renamed with your student ID.</p>
@@ -718,9 +724,9 @@ Perf counters not enabled.
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal-of-this-lab">Goal of this lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-and-profiling-the-models-20">Porting and Profiling the Models - 20%</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-the-new-models-10">Porting the New Models - 10%</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-the-mobilevit-10">Profiling the MobileViT - 10%</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-and-profiling-the-models-10">Porting and Profiling the Models - 10%</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-the-new-models-5">Porting the New Models - 5%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-the-mobilevit-5">Profiling the MobileViT - 5%</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerating-the-logistic-function-60">Accelerating the Logistic Function - 60%</a><ul class="nav section-nav flex-column">
@@ -737,6 +743,7 @@ Perf counters not enabled.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Guide</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-in-the-demo-10">Questions in the Demo - 10%</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
 </ul>
   </nav></div>

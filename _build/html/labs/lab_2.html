@@ -310,8 +310,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal-of-this-lab">Goal of this lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-quantized-model-10">Running Quantized Model - 10%</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simd-mac-instruction-90">SIMD MAC Instruction - 90%</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-convolution-70">Accelerate Convolution - 70%</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simd-mac-instruction-80">SIMD MAC Instruction - 80%</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-convolution-60">Accelerate Convolution - 60%</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cfu-v">cfu.v</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conv-h">conv.h</a></li>
 </ul>
@@ -319,6 +319,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-fully-connected-20">Accelerate Fully Connected - 20%</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-in-the-demo-10">Questions in the Demo - 10%</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
 </ul>
             </nav>
@@ -338,7 +339,8 @@ document.write(`
 <hr class="docutils" />
 <ul class="simple">
 <li><p><a class="reference internal" href="#running-quantized-model-10"><span class="xref myst">Running Quantized Model - 10%</span></a></p></li>
-<li><p><a class="reference internal" href="#simd-mac-instruction-90"><span class="xref myst">SIMD MAC Instruction - 90%</span></a></p></li>
+<li><p><a class="reference internal" href="#simd-mac-instruction-80"><span class="xref myst">SIMD MAC Instruction - 80%</span></a></p></li>
+<li><p><a class="reference internal" href="#questions-in-the-demo-10"><span class="xref myst">Questions in the Demo - 10%</span></a></p></li>
 </ul>
 </section>
 <section id="introduction">
@@ -386,11 +388,11 @@ $<span class="w"> </span>make<span class="w"> </span>load
 <p>The quantized fixed-point Convolution utilizes the <code class="docutils literal notranslate"><span class="pre">conv.h</span></code> kernel found in <code class="docutils literal notranslate"><span class="pre">tensorflow/lite/kernels/internal/reference/integer_ops</span></code>, while the float32 Convolution from the previous lab uses <code class="docutils literal notranslate"><span class="pre">tensorflow/lite/kernels/internal/reference/conv.h</span></code>. These kernels differ, so if you notice that your cycle counter does not function correctly with the quantized model, there is no need for concern.</p>
 </div>
 </section>
-<section id="simd-mac-instruction-90">
-<h2>SIMD MAC Instruction - 90%<a class="headerlink" href="#simd-mac-instruction-90" title="Link to this heading">#</a></h2>
+<section id="simd-mac-instruction-80">
+<h2>SIMD MAC Instruction - 80%<a class="headerlink" href="#simd-mac-instruction-80" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
-<section id="accelerate-convolution-70">
-<h3>Accelerate Convolution - 70%<a class="headerlink" href="#accelerate-convolution-70" title="Link to this heading">#</a></h3>
+<section id="accelerate-convolution-60">
+<h3>Accelerate Convolution - 60%<a class="headerlink" href="#accelerate-convolution-60" title="Link to this heading">#</a></h3>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p><a class="reference external" href="https://cfu-playground.readthedocs.io/en/latest/step-by-step.html">The Step-by-Step Guide to Building an ML Accelerator</a><br />
@@ -541,8 +543,7 @@ $<span class="w"> </span>cp<span class="w"> </span><span class="se">\</span>
 </pre></div>
 </div>
 <p>The SIMD MAC implementation on the Convolution should achieve at least a 10x speedup compared to the KWS model composed of FP32 and executed in a serial manner. The prediction on labels should also be correct.</p>
-<a class="reference internal image-reference" href="../_images/conv_result.png"><img alt="../_images/conv_result.png" src="../_images/conv_result.png" style="width: 300px;" />
-</a>
+<a class="reference internal image-reference" href="../_images/conv_result.png"><img alt="../_images/conv_result.png" src="../_images/conv_result.png" style="width: 300px;" /></a>
 <p>To get full score, the cycles of inferencing the quantized model should not beyond 2500M, and the prediction of all 5 labels should be correct.</p>
 </section>
 </section>
@@ -555,11 +556,13 @@ $<span class="w"> </span>cp<span class="w"> </span><span class="se">\</span>
 </pre></div>
 </div>
 <p>The model uses per-channel fully connected layer; therefore, the function you need to modify is the third one in <code class="docutils literal notranslate"><span class="pre">fully_connected.h</span></code>. After implementing acceleration, the execution <code class="docutils literal notranslate"><span class="pre">ticks</span></code> of your function should be <code class="docutils literal notranslate"><span class="pre">fewer</span> <span class="pre">than</span> <span class="pre">35</span></code>.</p>
-<a class="reference internal image-reference" href="../_images/before.png"><img alt="../_images/before.png" src="../_images/before.png" style="width: 200px;" />
-</a>
-<a class="reference internal image-reference" href="../_images/after.png"><img alt="../_images/after.png" src="../_images/after.png" style="width: 200px;" />
-</a>
+<a class="reference internal image-reference" href="../_images/before.png"><img alt="../_images/before.png" src="../_images/before.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="../_images/after.png"><img alt="../_images/after.png" src="../_images/after.png" style="width: 200px;" /></a>
 </section>
+</section>
+<section id="questions-in-the-demo-10">
+<h2>Questions in the Demo - 10%<a class="headerlink" href="#questions-in-the-demo-10" title="Link to this heading">#</a></h2>
+<p>You will be asked several questions about the concepts covered in this lab and your implementation. This section accounts for 10% of the total lab score.</p>
 </section>
 <section id="submission">
 <h2>Submission<a class="headerlink" href="#submission" title="Link to this heading">#</a></h2>
@@ -629,8 +632,8 @@ $<span class="w"> </span>cp<span class="w"> </span><span class="se">\</span>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal-of-this-lab">Goal of this lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-quantized-model-10">Running Quantized Model - 10%</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simd-mac-instruction-90">SIMD MAC Instruction - 90%</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-convolution-70">Accelerate Convolution - 70%</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simd-mac-instruction-80">SIMD MAC Instruction - 80%</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-convolution-60">Accelerate Convolution - 60%</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cfu-v">cfu.v</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conv-h">conv.h</a></li>
 </ul>
@@ -638,6 +641,7 @@ $<span class="w"> </span>cp<span class="w"> </span><span class="se">\</span>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-fully-connected-20">Accelerate Fully Connected - 20%</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-in-the-demo-10">Questions in the Demo - 10%</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
 </ul>
   </nav></div>

@@ -2,17 +2,18 @@
 
 ## Goal of this lab
 ---
-- [Porting and Profiling the Models - 20%](#porting-and-profiling-the-models-20)
+- [Porting and Profiling the Models - 10%](#porting-and-profiling-the-models-20)
 - [Accelerating the Logistic Function - 60%](#accelerating-the-logistic-function-60)
 - [Accelerating the Softmax Function - 20%](#accelerating-the-softmax-function-20)
+- [Questions in the Demo - 10%](#questions-in-the-demo-10)
 
 ## Introduction
 ---
 Modern models frequently utilize specialized activation functions that involve complex mathematical computations, such as exponentials, square roots, and reciprocals. Unlike simpler functions like ReLU, these sophisticated operations can become bottlenecks during model inference. In this lab, we will design an element-wise unit specifically for enhancing the inference speed of the **Logistic** and **Softmax** functions in the **MobileViT** model.
 
-## Porting and Profiling the Models - 20%
+## Porting and Profiling the Models - 10%
 ---
-### Porting the New Models - 10%
+### Porting the New Models - 5%
 
 In this lab, we will provide you two models:
 
@@ -77,7 +78,7 @@ Also, please follow this guide to **add the new operations required by the Mobil
 
 After completing these steps, you should be able to run the two new models and obtain the scores for this section.
 
-### Profiling the MobileViT - 10%
+### Profiling the MobileViT - 5%
 
 After executing the MobileViT model, you may notice that the inference process is quite slow. Please **analyze and compare the time consumed by each operation**, with particular attention to the **activation functions**. You may present your analysis in any format, such as **a table or a pie chart**. Additionally, you have the option to use data with or without SIMD MAC acceleration.
 
@@ -279,6 +280,11 @@ But, be careful: the fixed-point integer bits used for the exponential function 
 ```{note}
 You'll need to use the designs from Lab 3 and Lab 4 in Lab 5, so I recommend not fully utilizing all the hardware resources in this lab. Otherwise, you might run into issues with insufficient hardware resources in Lab 5.
 ```
+
+## Questions in the Demo - 10%
+
+You will be asked several questions about the concepts covered in this lab and your implementation. This section accounts for 10% of the total lab score.
+
 
 ## Submission
 

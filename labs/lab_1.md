@@ -3,8 +3,9 @@
 ## Goal of this lab
 ---
 - [Setting up the CFU-Playground Environment - 20%](#setting-up-the-cfu-playground-environment-20)
-- [Porting the KWS model - 60%](#porting-the-kws-model-60)
+- [Porting the KWS model - 50%](#porting-the-kws-model-50)
 - [Measuring the MAC cycles and DRAM usage for the KWS model - 20%](#measuring-the-mac-cycles-and-dram-usage-for-the-kws-model-20)
+- [Questions in the Demo - 10%](#questions-in-the-demo-10)
 
 ## Introduction
 ---
@@ -94,7 +95,7 @@ export PATH=$PATH:$HOME/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ub
     ```
     - Builds and loads C program (BUILD_JOBS=How many cores does your computer have)
     ``` bash
-    $ sudo make load BUILD_JOBS=4 TTY=/dev/ttyUSB1
+    $ make load BUILD_JOBS=4 TTY=/dev/ttyUSB1
     ```
     now you should observe some output like this:
 
@@ -110,13 +111,13 @@ export PATH=$PATH:$HOME/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ub
     ![](https://hackmd.io/_uploads/rJhYcfAa3.png)
 
 ```{hint}
-If you are doing this on a remote server and can't physically access the "CPU_RESET" button, press "enter" and key in "reboot" instead of pressing the "CPU_RESET".
+If you are doing this on a remote server and can't physically access the "CPU_RESET" button, you can use `sudo make load` after `make load`, then press "enter" and key in "reboot" instead of pressing the "CPU_RESET".
 
 <img src="images/lab1/litex.png" width="150px">
 
 ```
 
-## Porting the KWS model - 60%
+## Porting the KWS model - 50%
 -----
 **[Checkout the architecture of the keyword spotting (KWS) model](https://hackmd.io/ou3Ybtx9RkGYopCDtdGLZA?view)**
 
@@ -400,6 +401,11 @@ You will receive all 15 points as long as you measure it correctly.
      38970M (  38970422645 )  cycles total
     
 ```
+
+## Questions in the Demo - 10%
+
+You will be asked several questions about the concepts covered in this lab and your implementation. This section accounts for 10% of the total lab score.
+
 ## Submission
 ---
 Since this lab is all about setting up the enviornment, you **DO NOT** have to submit anything to E3.

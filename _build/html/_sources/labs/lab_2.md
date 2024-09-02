@@ -3,8 +3,8 @@
 ## Goal of this lab
 ---
 - [Running Quantized Model - 10%](#running-quantized-model-10)
-- [SIMD MAC Instruction - 90%](#simd-mac-instruction-90)
-
+- [SIMD MAC Instruction - 80%](#simd-mac-instruction-80)
+- [Questions in the Demo - 10%](#questions-in-the-demo-10)
 
 ## Introduction
 ---
@@ -54,9 +54,9 @@ You should observe a significant reduction in the number of cycles, as the quant
 The quantized fixed-point Convolution utilizes the `conv.h` kernel found in `tensorflow/lite/kernels/internal/reference/integer_ops`, while the float32 Convolution from the previous lab uses `tensorflow/lite/kernels/internal/reference/conv.h`. These kernels differ, so if you notice that your cycle counter does not function correctly with the quantized model, there is no need for concern.
 ```
 
-## SIMD MAC Instruction - 90%
+## SIMD MAC Instruction - 80%
 ---
-### Accelerate Convolution - 70%
+### Accelerate Convolution - 60%
 
 ```{hint}
 [The Step-by-Step Guide to Building an ML Accelerator](https://cfu-playground.readthedocs.io/en/latest/step-by-step.html)  
@@ -228,6 +228,10 @@ The model uses per-channel fully connected layer; therefore, the function you ne
 
 <img src="images/lab2/before.png" width="200px">
 <img src="images/lab2/after.png" width="200px">
+
+## Questions in the Demo - 10%
+
+You will be asked several questions about the concepts covered in this lab and your implementation. This section accounts for 10% of the total lab score.
 
 ## Submission
 
