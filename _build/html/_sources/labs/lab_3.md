@@ -42,7 +42,7 @@ An 8-bits input data, 32-bits accumulated data design. Please be careful with th
 
 This lab will require a beginner’s level of verilog.
 ```bash
-$ git clone https://github.com/nycu-caslab/AAML2023-Lab3.git
+TBD
 ```
 
 ```{note}
