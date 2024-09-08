@@ -369,34 +369,39 @@ document.write(`
 <h3>Prerequisite<a class="headerlink" href="#prerequisite" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Python3 with numpy library installed</p></li>
-<li><p>iverilog or ncverilog or vivado</p></li>
-<li><p>nWave or Verdi or GTKWave</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iverilog</span></code> or <code class="docutils literal notranslate"><span class="pre">ncverilog</span></code> or any simulator</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nWave</span></code> or <code class="docutils literal notranslate"><span class="pre">Verdi</span></code> or <code class="docutils literal notranslate"><span class="pre">GTKWave</span></code> or anything that can read <code class="docutils literal notranslate"><span class="pre">.vcd</span></code> or <code class="docutils literal notranslate"><span class="pre">.fsdb</span></code></p></li>
 <li><p>Makefile</p></li>
 </ul>
 </section>
 <section id="requirements">
 <h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h3>
-<p>You need to perform Matrix multiplication with one of dataflow stationary method with correct functional simulation in 4x4 Processing elements(PEs). That is this design can perform (4 * K) * (K * 4) 8-bit integer matrix multiplication.</p>
-<p>Your design should be written in the Verilog language. There is no limitation in how you program your design.
-Your PEs shouldn’t more than 4x4, where a 2D systolic array architecture is recommended.
+<p>You need to perform Matrix multiplication with one of dataflow stationary method with correct functional simulation in 4x4 Processing elements(PEs). That is, this design can perform (4 * K) * (K * 4) 8-bit integer matrix multiplication.</p>
+<p>Your design should be written in the Verilog. There is no limitation in how you program your design.
+Your PEs shouldn’t exceed 4x4, where a 2D systolic array architecture is recommended.
 An 8-bits input data, 32-bits accumulated data design. Please be careful with the bit-width problem.
 (1024 + 256 ∗ 2) KiBytes in total of global buffer size.</p>
 </section>
 <section id="getting-started">
 <h3>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h3>
 <p>This lab will require a beginner’s level of verilog.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>TBD
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nycu-caslab/AAML2024-Lab3.git
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The testbench generates waveform to <code class="docutils literal notranslate"><span class="pre">TPU.vcd</span></code> or <code class="docutils literal notranslate"><span class="pre">TPU.fsdb</span></code> (change it in the <code class="docutils literal notranslate"><span class="pre">TESTBENCH.v</span></code>).
 After running the simulation each time, you may use your waveform viewer to check it out.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>nWave TPU.fsdb
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>nWave (TPU.fsdb | TPU.vcd)
 or
 gtkwave TPU.vcd
 </pre></div>
 </div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default simulator in the makefile is <code class="docutils literal notranslate"><span class="pre">iverilog</span></code>.
+If you have the licence of <code class="docutils literal notranslate"><span class="pre">ncverilog</span></code> and want faster simulation, you may use the <code class="docutils literal notranslate"><span class="pre">Makefile_ncverilog</span></code>.</p>
 </div>
 </section>
 <section id="interface-and-block-diagram">
@@ -522,12 +527,13 @@ gtkwave TPU.vcd
 <section id="rules">
 <h3>Rules<a class="headerlink" href="#rules" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Your TPU design (<code class="docutils literal notranslate"><span class="pre">TPU.v</span></code>) should be under the top module which provided by TA.</p></li>
+<li><p>Your TPU design (<code class="docutils literal notranslate"><span class="pre">TPU.v</span></code>) should be under the top module which provided by TA, it’s fine to add various new files in the <code class="docutils literal notranslate"><span class="pre">RTL</span></code> directory.</p></li>
+<li><p>you may not modify the <code class="docutils literal notranslate"><span class="pre">global_buffer.v</span></code>.</p></li>
 <li><p>At the start of the simulation, testbench will load the global buffer A &amp; B, which assume that CPU or DMA has already prepared the data for TPU in global buffer. When signal <code class="docutils literal notranslate"><span class="pre">in_valid</span> <span class="pre">==</span> <span class="pre">1</span></code>, the size of the two matrices will be available for TPU (m, n, k) for <em><strong>only one cycle</strong></em>.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For the details of the mapping of matrix into global buffer. Please refer to the <em><strong><a class="reference internal" href="#appendix"><span class="xref myst">Appendix</span></a></strong></em>. There are two types of mapping. <em><strong>Type A</strong></em> for <code class="docutils literal notranslate"><span class="pre">matrix</span> <span class="pre">A</span></code>, and <em><strong>Type B</strong></em> for <code class="docutils literal notranslate"><span class="pre">matrix</span> <span class="pre">B</span> <span class="pre">and</span> <span class="pre">C</span></code>.</p>
+<p>For the details of the mapping of matrix into global buffer. Please refer to the <em><strong><a class="reference internal" href="#appendix"><span class="xref myst">Appendix</span></a></strong></em>. There are two types of mapping. The transposed <em><strong>Type A</strong></em> for <code class="docutils literal notranslate"><span class="pre">matrix</span> <span class="pre">A</span></code>, and <em><strong>Type B</strong></em> for <code class="docutils literal notranslate"><span class="pre">matrix</span> <span class="pre">B</span> <span class="pre">and</span> <span class="pre">C</span></code>.</p>
 </div>
 <ul class="simple">
 <li><p>Testbench will compare your output global buffer with golden, when you finish the calculation, that is <code class="docutils literal notranslate"><span class="pre">busy</span> <span class="pre">==</span> <span class="pre">0</span></code>. Then you need to wait for the next <code class="docutils literal notranslate"><span class="pre">in_valid</span></code> for the next test case.</p></li>
@@ -688,12 +694,15 @@ gtkwave TPU.vcd
         ├── TPU.v
         ├── systolic_array.v
         ├── PE.v
-        └── other files...
+        └── other files you added inside the RTL directory...
 </pre></div>
 </div>
-<p>Make sure your files are well included!</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
+<ol class="arabic simple">
+<li><p>Make sure your files are well included!</p></li>
+<li><p>You <strong>DO NOT</strong> have to submit the <code class="docutils literal notranslate"><span class="pre">global_buffer.v</span></code>.</p></li>
+</ol>
 <p>TAs should be able to run your project without any modification. If TAs cannot compile or run your code, <strong>you can’t get any scores</strong>. Also, <strong>PLAGIARISM is not allowed</strong>.</p>
 </div>
 </section>

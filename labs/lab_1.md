@@ -384,7 +384,7 @@ $ make prog EXTRA_LITEX_ARGS="--cpu-variant=perf+cfu"
 $ make load
 ```
 ```{note}
-The output shall look something like this, but note that the result is highly related to DRAM, so you may get **different** result everytime.
+The output shall look something like this, but note that the result is highly related to cache and DRAM, so you may get **different** result everytime.
 
 You will receive all 15 points as long as you measure it correctly.
     
@@ -409,6 +409,10 @@ You will be asked several questions about the concepts covered in this lab and y
 ## Submission
 ---
 Since this lab is all about setting up the enviornment, you **DO NOT** have to submit anything to E3.
+
+```{important}
+Run any of the **three** labels and screenshot them, you will have to show your screenshots in the demo and explain your codes.
+```
 
 ### Reference
 ---

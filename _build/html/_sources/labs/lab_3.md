@@ -7,6 +7,7 @@
 - [Basic Exercise #3 - 30%](#basic-exercise-3-30)
 - [Advanced Exercise - 30%](#advanced-exercise-30)
 
+
 ## Introduction
 ---
 The systolic array used by Google Tensor Processing Unit (TPU) accelerates the matrix computation by using the dataflow operation. The systolic array contains multiple processing elements (PEs), each of them is responsible for the multiply–and-accumulate (MAC) operation. It can performs multiple elements in a matrix simultaneously and achieves high computational throughput.
@@ -25,16 +26,16 @@ The goals of this lab are to familiarize you with the concepts of dataflows in s
 #### Prerequisite
 
 - Python3 with numpy library installed
-- iverilog or ncverilog or vivado
-- nWave or Verdi or GTKWave
+- `iverilog` or `ncverilog` or any simulator
+- `nWave` or `Verdi` or `GTKWave` or anything that can read `.vcd` or `.fsdb`
 - Makefile
 
 #### Requirements
 
-You need to perform Matrix multiplication with one of dataflow stationary method with correct functional simulation in 4x4 Processing elements(PEs). That is this design can perform (4 * K) * (K * 4) 8-bit integer matrix multiplication.
+You need to perform Matrix multiplication with one of dataflow stationary method with correct functional simulation in 4x4 Processing elements(PEs). That is, this design can perform (4 * K) * (K * 4) 8-bit integer matrix multiplication.
 
-Your design should be written in the Verilog language. There is no limitation in how you program your design.
-Your PEs shouldn’t more than 4x4, where a 2D systolic array architecture is recommended.
+Your design should be written in the Verilog. There is no limitation in how you program your design.
+Your PEs shouldn’t exceed 4x4, where a 2D systolic array architecture is recommended.
 An 8-bits input data, 32-bits accumulated data design. Please be careful with the bit-width problem.
 (1024 + 256 ∗ 2) KiBytes in total of global buffer size.
 
@@ -42,7 +43,7 @@ An 8-bits input data, 32-bits accumulated data design. Please be careful with th
 
 This lab will require a beginner’s level of verilog.
 ```bash
-TBD
+$ git clone https://github.com/nycu-caslab/AAML2024-Lab3.git
 ```
 
 ```{note}
@@ -50,9 +51,13 @@ The testbench generates waveform to `TPU.vcd` or `TPU.fsdb` (change it in the `T
 After running the simulation each time, you may use your waveform viewer to check it out. 
 
 
-    nWave TPU.fsdb
+    nWave (TPU.fsdb | TPU.vcd)
     or
     gtkwave TPU.vcd
+```
+```{note}
+The default simulator in the makefile is `iverilog`.
+If you have the licence of `ncverilog` and want faster simulation, you may use the `Makefile_ncverilog`.
 ```
 
 #### Interface and Block Diagram
@@ -91,11 +96,13 @@ After running the simulation each time, you may use your waveform viewer to chec
 
 #### Rules
 
-- Your TPU design (`TPU.v`) should be under the top module which provided by TA.
+- Your TPU design (`TPU.v`) should be under the top module which provided by TA, it's fine to add various new files in the `RTL` directory.
+
+- you may not modify the `global_buffer.v`.
 
 - At the start of the simulation, testbench will load the global buffer A & B, which assume that CPU or DMA has already prepared the data for TPU in global buffer. When signal `in_valid == 1`, the size of the two matrices will be available for TPU (m, n, k) for ***only one cycle***.
 ```{note}
-For the details of the mapping of matrix into global buffer. Please refer to the ***[Appendix](#appendix)***. There are two types of mapping. ***Type A*** for `matrix A`, and ***Type B*** for `matrix B and C`.
+For the details of the mapping of matrix into global buffer. Please refer to the ***[Appendix](#appendix)***. There are two types of mapping. The transposed ***Type A*** for `matrix A`, and ***Type B*** for `matrix B and C`.
 ```
 - Testbench will compare your output global buffer with golden, when you finish the calculation, that is `busy == 0`. Then you need to wait for the next `in_valid` for the next test case.
 
@@ -211,10 +218,12 @@ YourID.zip
         ├── TPU.v
         ├── systolic_array.v
         ├── PE.v
-        └── other files...
+        └── other files you added inside the RTL directory...
 ```
 
-Make sure your files are well included!
 ```{important}
+1. Make sure your files are well included! 
+2. You **DO NOT** have to submit the `global_buffer.v`.
+
 TAs should be able to run your project without any modification. If TAs cannot compile or run your code, **you can't get any scores**. Also, **PLAGIARISM is not allowed**.
 ```
