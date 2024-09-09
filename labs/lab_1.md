@@ -106,7 +106,7 @@ export PATH=$PATH:$HOME/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ub
 
     - Now press the “CPU_RESET” button on the board and follow the steps below:
     ```{hint}
-    If you are doing this on a remote server and can't physically access the "CPU_RESET" button, you can use `sudo make load` after `make load`, then press "enter" and key in "reboot" instead of pressing the "CPU_RESET".
+    If you are doing this on a remote server and can't physically access the "CPU_RESET" button, after `make load`, you may press "enter" and key in `reboot` instead of pressing the "CPU_RESET".
 
     <img src="images/lab1/litex.png" width="150px">
 
