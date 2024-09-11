@@ -166,7 +166,40 @@ You may need to accelerate both the exponential and reciprocal parts in order to
 ```{note}
 **You are not required to follow to the provided guide below**. Instead, you are encouraged to use any method to accelerate model inference, provided that it passes the golden test of the Logistic Test Model.
 ```
-First of all, it is essential to familiarize yourself with **fixed-point** arithmetic and the `FixedPoint` class defined in `fixedpoint.h`. The key components and functions you are likely to use within the `FixedPoint` class include `kIntegerBits`, `FromRaw()`, and `raw()`. Additionally, you may find the comments for the `FixedPoint` class in `fixedpoint.h` to be a useful reference.
+First of all, it is essential to familiarize yourself with **fixed-point** arithmetic and the `FixedPoint` class defined in `fixedpoint.h`. The key components and functions you are likely to use within the `FixedPoint` class include `kIntegerBits`, `FromRaw()`, and `raw()`.  
+Additionally, You can refer to [Wikipedia - Q format notation](https://en.wikipedia.org/wiki/Q_(number_format)) and the comments for the `FixedPoint` class in `fixedpoint.h` to help you understand fixed-point arithmetic. The [Q format converter](https://chummersone.github.io/qformat.html#converter) is also a very useful tool that you can use to convert between fixed-point and floating-point numbers, which will assist you in debugging.
+
+```cpp
+// Part 2: the FixedPoint class.
+
+// A FixedPoint object represents a fixed-point value stored in the underlying
+// integer type tRawType, if tRawType is a plain scalar integer type.
+// Alternatively, tRawType may be a SIMD type (e.g. NEON int32x4_t) in which
+// case a FixedPoint object represents a corresponding SIMD vector of fixed
+// point values.
+//
+// tIntegerBits describes the range of the fixed-point format: if
+// tIntegerBits == m then the range of representable values is the half-open
+// interval [-2^m; 2^m) where the open boundary on the right side means that
+// 2^m is not representable (how close the maximum representable value is to
+// it, depends on bit-depth of tRawType).
+//
+// In "Q format notation",
+//   https://en.wikipedia.org/wiki/Q_(number_format)
+// we are describing the format
+//   Qm.n
+// where
+//   m = tIntegerBits
+// and
+//   n = NumberOfBits(tRawType) - (m + 1)
+// Note that the (m + 1) in the above line is because we adopt the convention
+// that we count the integer bits exclusively of the sign bit; so (m + 1) is
+// the total number of integer bits inclusive of the sign bit.
+//
+// Accordingly, the number of integral representable values in our range
+//   [-2^m ; 2^m)
+// is equal to 2^(m+1).
+```
 
 After tracing the code, you may notice that the **exponential** and the **reciprocal** are the primary bottlenecks, so we can focus on accelerating these two operations in this function.  
 `third_party/gemmlowp/fixedpoint/fixedpoint.h`

@@ -526,7 +526,39 @@ Perf counters not enabled.
 <p class="admonition-title">Note</p>
 <p><strong>You are not required to follow to the provided guide below</strong>. Instead, you are encouraged to use any method to accelerate model inference, provided that it passes the golden test of the Logistic Test Model.</p>
 </div>
-<p>First of all, it is essential to familiarize yourself with <strong>fixed-point</strong> arithmetic and the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class defined in <code class="docutils literal notranslate"><span class="pre">fixedpoint.h</span></code>. The key components and functions you are likely to use within the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class include <code class="docutils literal notranslate"><span class="pre">kIntegerBits</span></code>, <code class="docutils literal notranslate"><span class="pre">FromRaw()</span></code>, and <code class="docutils literal notranslate"><span class="pre">raw()</span></code>. Additionally, you may find the comments for the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class in <code class="docutils literal notranslate"><span class="pre">fixedpoint.h</span></code> to be a useful reference.</p>
+<p>First of all, it is essential to familiarize yourself with <strong>fixed-point</strong> arithmetic and the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class defined in <code class="docutils literal notranslate"><span class="pre">fixedpoint.h</span></code>. The key components and functions you are likely to use within the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class include <code class="docutils literal notranslate"><span class="pre">kIntegerBits</span></code>, <code class="docutils literal notranslate"><span class="pre">FromRaw()</span></code>, and <code class="docutils literal notranslate"><span class="pre">raw()</span></code>.<br />
+Additionally, You can refer to <a class="reference external" href="https://en.wikipedia.org/wiki/Q_(number_format)">Wikipedia - Q format notation</a> and the comments for the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class in <code class="docutils literal notranslate"><span class="pre">fixedpoint.h</span></code> to help you understand fixed-point arithmetic. The <a class="reference external" href="https://chummersone.github.io/qformat.html#converter">Q format converter</a> is also a very useful tool that you can use to convert between fixed-point and floating-point numbers, which will assist you in debugging.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Part 2: the FixedPoint class.</span>
+
+<span class="c1">// A FixedPoint object represents a fixed-point value stored in the underlying</span>
+<span class="c1">// integer type tRawType, if tRawType is a plain scalar integer type.</span>
+<span class="c1">// Alternatively, tRawType may be a SIMD type (e.g. NEON int32x4_t) in which</span>
+<span class="c1">// case a FixedPoint object represents a corresponding SIMD vector of fixed</span>
+<span class="c1">// point values.</span>
+<span class="c1">//</span>
+<span class="c1">// tIntegerBits describes the range of the fixed-point format: if</span>
+<span class="c1">// tIntegerBits == m then the range of representable values is the half-open</span>
+<span class="c1">// interval [-2^m; 2^m) where the open boundary on the right side means that</span>
+<span class="c1">// 2^m is not representable (how close the maximum representable value is to</span>
+<span class="c1">// it, depends on bit-depth of tRawType).</span>
+<span class="c1">//</span>
+<span class="c1">// In &quot;Q format notation&quot;,</span>
+<span class="c1">//   https://en.wikipedia.org/wiki/Q_(number_format)</span>
+<span class="c1">// we are describing the format</span>
+<span class="c1">//   Qm.n</span>
+<span class="c1">// where</span>
+<span class="c1">//   m = tIntegerBits</span>
+<span class="c1">// and</span>
+<span class="c1">//   n = NumberOfBits(tRawType) - (m + 1)</span>
+<span class="c1">// Note that the (m + 1) in the above line is because we adopt the convention</span>
+<span class="c1">// that we count the integer bits exclusively of the sign bit; so (m + 1) is</span>
+<span class="c1">// the total number of integer bits inclusive of the sign bit.</span>
+<span class="c1">//</span>
+<span class="c1">// Accordingly, the number of integral representable values in our range</span>
+<span class="c1">//   [-2^m ; 2^m)</span>
+<span class="c1">// is equal to 2^(m+1).</span>
+</pre></div>
+</div>
 <p>After tracing the code, you may notice that the <strong>exponential</strong> and the <strong>reciprocal</strong> are the primary bottlenecks, so we can focus on accelerating these two operations in this function.<br />
 <code class="docutils literal notranslate"><span class="pre">third_party/gemmlowp/fixedpoint/fixedpoint.h</span></code></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns logistic(x) = 1 / (1 + exp(-x)) for x &gt; 0.</span>
