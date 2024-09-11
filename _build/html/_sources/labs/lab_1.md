@@ -303,7 +303,7 @@ Press a number to run a test. ***(takes plenty of minutes)***
 
 
 ```{note}
-If you get **all** of the following output scores correct, you could get all the points of this part (which means **50%** points).
+If you get the following output scores correct, you could get all the points of this part (which means **50%** points, evaluation details are in the Submission chapter).
 
 
 <img src="https://hackmd.io/_uploads/rkTp0T6C3.png" width="700px">
@@ -418,7 +418,7 @@ Since this lab is all about setting up the enviornment, you **DO NOT** have to s
 Screenshot the following:
 
 1. The golden test with "passed" result.
-2. Run any of the **TWO** labels using the KWS model.
+2. Run any of the **THREE** labels using the KWS model.
 3. the MAC cycles and the DRAM usage.
 
 You will have to show your screenshots in the demo and explain your codes.
