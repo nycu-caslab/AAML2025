@@ -109,7 +109,7 @@ export PATH=$PATH:$HOME/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ub
 
     - Now press the “CPU_RESET” button on the board and follow the steps below:
     ```{hint}
-    If you are doing this on a remote server and can't physically access the "CPU_RESET" button, after `make load`, you may press "enter" and key in `reboot` instead of pressing the "CPU_RESET".
+    If you are doing this on a remote server and can't physically access the "CPU_RESET" button, after `make prog` and `make load`, you may press "enter" and key in `reboot` instead of pressing the "CPU_RESET".
 
     <img src="images/lab1/litex.png" width="150px">
 
@@ -272,7 +272,7 @@ Set the kTensorArenaSize. You should set the &#34;size&#34; below.
 #endif
 ```
 ```{note}
-The size of kTensorArenaSize will depend on the model you’re using, and may need to be determined by experimentation. You should try again and again to get minimal value.
+The size of kTensorArenaSize will depend on the model you’re using, and may need to be determined by experimentation. You may try all over different size to get minimal value.
 ```
 
 #### ```CFU-Playground/proj/my_first_cfu/Makefile```
@@ -290,7 +290,7 @@ $ make load BUILD_JOBS=4 TTY=/dev/ttyUSB1
 ``` 
 
 ```{note}
-The model loaded successfully if you get the following output. You may get **20%** points now.
+The model loaded successfully if you get the following output.
 
 <img src="https://hackmd.io/_uploads/HyUjALkC3.png" width="550px">
 
@@ -303,7 +303,7 @@ Press a number to run a test. ***(takes plenty of minutes)***
 
 
 ```{note}
-If you get **all** of the following output scores correct, you could get all the points of this part (which means **60%** points).
+If you get **all** of the following output scores correct, you could get all the points of this part (which means **50%** points).
 
 
 <img src="https://hackmd.io/_uploads/rkTp0T6C3.png" width="700px">
