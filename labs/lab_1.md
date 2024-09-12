@@ -390,7 +390,7 @@ $ make load
 ```{note}
 The output shall look something like this, but note that the result is highly related to cache and DRAM, so you may get **different** result everytime.
 
-You will receive all 15 points as long as you measure it correctly.
+You will receive all 15 points as long as you measure the MAC cycles correctly and 5 points for measuring the DRAM usage.
     
      Counter |  Total | Starts | Average |     Raw
     ---------+--------+--------+---------+--------------
