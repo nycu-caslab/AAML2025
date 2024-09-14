@@ -32,7 +32,7 @@ The goals of this lab are to familiarize you with the concepts of dataflows in s
 
 #### Requirements
 
-You need to perform Matrix multiplication with one of dataflow stationary method with correct functional simulation in 4x4 Processing elements(PEs). That is, this design can perform (4 * K) * (K * 4) 8-bit integer matrix multiplication.
+You need to perform Matrix multiplication with one of dataflow stationary method with correct functional simulation in 4x4 Processing elements(PEs). That is, this design can perform (M * K) * (K * N) 8-bit integer matrix multiplication.
 
 Your design should be written in the Verilog. There is no limitation in how you program your design.
 Your PEs shouldn’t exceed 4x4, where a 2D systolic array architecture is recommended.
@@ -43,7 +43,7 @@ An 8-bits input data, 32-bits accumulated data design. Please be careful with th
 
 This lab will require a beginner’s level of verilog.
 ```bash
-$ git clone https://github.com/nycu-caslab/AAML2024-Lab3.git
+$ TBD
 ```
 
 ```{note}
