@@ -35,14 +35,14 @@ $ ./scripts/setup
 ### 4. Install Vivado
 
 - Download Vivado
-Any Vivado version later than `2020.1` is fine.
+We are using Vivado 2024.1 with Ubuntu 22.04
 
-> [Vivado Download page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/archive.html)
+> [Vivado Download page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2024-1.html)
 
 Make sure you can execute the installation binary before you start.
 ``` bash
-$ chmod +x Xilinx_Unified_2020.1_0602_1208_Lin64.bin
-$ ./Xilinx_Unified_2020.1_0602_1208_Lin64.bin
+$ chmod +x FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin
+$ ./FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin
 ```
 
 ```{note}
@@ -419,7 +419,7 @@ Screenshot the following:
 
 1. The golden test with "passed" result.
 2. Run any of the **THREE** labels using the KWS model.
-3. the MAC cycles and the DRAM usage.
+3. the MAC cycles and the DRAM usage (only one label is required).
 
 You will have to show your screenshots in the demo and explain your codes.
 ```
