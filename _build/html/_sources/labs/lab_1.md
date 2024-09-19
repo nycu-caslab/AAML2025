@@ -36,14 +36,14 @@ $ ./scripts/setup
 
 - Download Vivado
 
-We are using Vivado 2024.1 with Ubuntu 22.04
+You may use 2023.2 or 2024.1
 
-> [Vivado Download page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2024-1.html)
+> [Vivado Download page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2023-2.html)
 
 Make sure you can execute the installation binary before you start.
 ``` bash
-$ chmod +x FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin
-$ ./FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin
+$ chmod +x FPGAs_AdaptiveSoCs_Unified_2023.2_1013_2256_Lin64.bin
+$ ./FPGAs_AdaptiveSoCs_Unified_2023.2_1013_2256_Lin64.bin
 ```
 
 ```{note}
