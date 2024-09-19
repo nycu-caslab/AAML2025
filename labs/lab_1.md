@@ -35,6 +35,7 @@ $ ./scripts/setup
 ### 4. Install Vivado
 
 - Download Vivado
+
 We are using Vivado 2024.1 with Ubuntu 22.04
 
 > [Vivado Download page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2024-1.html)
