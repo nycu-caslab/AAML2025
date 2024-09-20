@@ -95,11 +95,11 @@ export PATH=$PATH:$HOME/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ub
     - Connect FPGA board to computer
     - Builds and programs gateware
     ``` bash
-    $ make prog USE_VIVADO=1 TTY=/dev/ttyUSB0
+    $ make prog USE_VIVADO=1 TTY=/dev/ttyUSB0 (or any serial you are using)
     ```
     - Builds and loads C program (BUILD_JOBS=How many cores does your computer have)
     ``` bash
-    $ make load BUILD_JOBS=4 TTY=/dev/ttyUSB1
+    $ make load BUILD_JOBS=4 TTY=/dev/ttyUSB1 (or any serial you are using)
     ```
     now you should observe some output like this:
 
@@ -286,8 +286,8 @@ DEFINES += INCLUDE_MODEL_DS_CNN_STREAM_FE
 
 ``` bash
 $ cd CFU-Playground/proj/my_first_cfu
-$ make prog USEVIVADO=1 TTY=/dev/ttyUSB0
-$ make load BUILD_JOBS=4 TTY=/dev/ttyUSB1
+$ make prog USEVIVADO=1 TTY=/dev/ttyUSB0 (or any serial you are using)
+$ make load BUILD_JOBS=4 TTY=/dev/ttyUSB1 (or any serial you are using)
 ``` 
 
 ```{note}

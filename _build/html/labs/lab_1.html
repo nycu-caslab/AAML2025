@@ -475,13 +475,13 @@ $<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>proj/
 <li><p>Connect FPGA board to computer</p></li>
 <li><p>Builds and programs gateware</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>make<span class="w"> </span>prog<span class="w"> </span><span class="nv">USE_VIVADO</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TTY</span><span class="o">=</span>/dev/ttyUSB0
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>make<span class="w"> </span>prog<span class="w"> </span><span class="nv">USE_VIVADO</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TTY</span><span class="o">=</span>/dev/ttyUSB0<span class="w"> </span><span class="o">(</span>or<span class="w"> </span>any<span class="w"> </span>serial<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>using<span class="o">)</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Builds and loads C program (BUILD_JOBS=How many cores does your computer have)</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>make<span class="w"> </span>load<span class="w"> </span><span class="nv">BUILD_JOBS</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">TTY</span><span class="o">=</span>/dev/ttyUSB1
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>make<span class="w"> </span>load<span class="w"> </span><span class="nv">BUILD_JOBS</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">TTY</span><span class="o">=</span>/dev/ttyUSB1<span class="w"> </span><span class="o">(</span>or<span class="w"> </span>any<span class="w"> </span>serial<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>using<span class="o">)</span>
 </pre></div>
 </div>
 <p>now you should observe some output like this:</p>
@@ -673,8 +673,8 @@ $<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>ds_cn
 <section id="running-the-project">
 <h3>8. Running the project<a class="headerlink" href="#running-the-project" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>CFU-Playground/proj/my_first_cfu
-$<span class="w"> </span>make<span class="w"> </span>prog<span class="w"> </span><span class="nv">USEVIVADO</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TTY</span><span class="o">=</span>/dev/ttyUSB0
-$<span class="w"> </span>make<span class="w"> </span>load<span class="w"> </span><span class="nv">BUILD_JOBS</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">TTY</span><span class="o">=</span>/dev/ttyUSB1
+$<span class="w"> </span>make<span class="w"> </span>prog<span class="w"> </span><span class="nv">USEVIVADO</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TTY</span><span class="o">=</span>/dev/ttyUSB0<span class="w"> </span><span class="o">(</span>or<span class="w"> </span>any<span class="w"> </span>serial<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>using<span class="o">)</span>
+$<span class="w"> </span>make<span class="w"> </span>load<span class="w"> </span><span class="nv">BUILD_JOBS</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">TTY</span><span class="o">=</span>/dev/ttyUSB1<span class="w"> </span><span class="o">(</span>or<span class="w"> </span>any<span class="w"> </span>serial<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>using<span class="o">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
