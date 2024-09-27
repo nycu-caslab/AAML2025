@@ -179,7 +179,7 @@ Try to input data and calculate at the same time, otherwise you may exceed 1,500
 - Steps:
     1. refer to Basic Lab1
     2. `make verif4`
-        - 100 test cases of A(M * K) * B(K * N), where M, K, N ∈ [4, 256)
+        - 50 test cases of A(M * K) * B(K * N), where M, K, N ∈ [4, 127)
 
 
 ## Appendix
