@@ -16,7 +16,10 @@ In this lab, we will use Verilog to implement the PE and a small systolic array 
 
 (Hint: The weight stationary is more complicated than output stationary.)
 ```{note}
-This lab does not require demonstration, submit your code to E3 only, details are in [Submission](#submission).
+1. This lab does not require demonstration, submit your code to E3 only, details are in [Submission](#submission).
+
+
+2. You will be asked to put your systolic array on FPGA in ***lab 5***, so please make sure that your systolic array is a synthesizable circuit.
 ```
 
 ## Systolic Array Implementation
@@ -26,7 +29,7 @@ The goals of this lab are to familiarize you with the concepts of dataflows in s
 #### Prerequisite
 
 - Python3 with numpy library installed
-- `iverilog` or `ncverilog` or any simulator
+- `iverilog` or `VCS` or `irun`
 - `nWave` or `Verdi` or `GTKWave` or anything that can read `.vcd` or `.fsdb`
 - Makefile
 
@@ -43,21 +46,22 @@ An 8-bits input data, 32-bits accumulated data design. Please be careful with th
 
 This lab will require a beginner’s level of verilog.
 ```bash
-$ TBD
+$ git clone https://github.com/nycu-caslab/AAML2024-Lab3.git
 ```
 
 ```{note}
-The testbench generates waveform to `TPU.vcd` or `TPU.fsdb` (change it in the `TESTBENCH.v`).
+The testbench generates waveform to `dump.vcd` or `dump.fsdb` (change the output file in the `TESTBENCH.v`).
 After running the simulation each time, you may use your waveform viewer to check it out. 
 
 
-    nWave (TPU.fsdb | TPU.vcd)
+    nWave (dump.fsdb | dump.vcd)
     or
-    gtkwave TPU.vcd
+    gtkwave dump.vcd
 ```
 ```{note}
-The default simulator in the makefile is `iverilog`.
-If you have the licence of `ncverilog` and want faster simulation, you may use the `Makefile_ncverilog`.
+1. The default verilog compiler in the makefile is `iverilog`, and using `vvp` as simulator.
+If you have the licence of `VCS` and want faster simulation, you may use the `Makefile_vcs`.
+2. The `Makefile_ncverilog` is for reference only, our Cadence licence has been down for a while :(
 ```
 
 #### Interface and Block Diagram

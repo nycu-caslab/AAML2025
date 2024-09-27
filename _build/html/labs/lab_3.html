@@ -358,7 +358,10 @@ document.write(`
 <p>(Hint: The weight stationary is more complicated than output stationary.)</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This lab does not require demonstration, submit your code to E3 only, details are in <a class="reference internal" href="#submission"><span class="xref myst">Submission</span></a>.</p>
+<ol class="arabic simple">
+<li><p>This lab does not require demonstration, submit your code to E3 only, details are in <a class="reference internal" href="#submission"><span class="xref myst">Submission</span></a>.</p></li>
+<li><p>You will be asked to put your systolic array on FPGA in <em><strong>lab 5</strong></em>, so please make sure that your systolic array is a synthesizable circuit.</p></li>
+</ol>
 </div>
 </section>
 <section id="systolic-array-implementation">
@@ -369,7 +372,7 @@ document.write(`
 <h3>Prerequisite<a class="headerlink" href="#prerequisite" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Python3 with numpy library installed</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">iverilog</span></code> or <code class="docutils literal notranslate"><span class="pre">ncverilog</span></code> or any simulator</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iverilog</span></code> or <code class="docutils literal notranslate"><span class="pre">VCS</span></code> or <code class="docutils literal notranslate"><span class="pre">irun</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">nWave</span></code> or <code class="docutils literal notranslate"><span class="pre">Verdi</span></code> or <code class="docutils literal notranslate"><span class="pre">GTKWave</span></code> or anything that can read <code class="docutils literal notranslate"><span class="pre">.vcd</span></code> or <code class="docutils literal notranslate"><span class="pre">.fsdb</span></code></p></li>
 <li><p>Makefile</p></li>
 </ul>
@@ -385,23 +388,26 @@ An 8-bits input data, 32-bits accumulated data design. Please be careful with th
 <section id="getting-started">
 <h3>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h3>
 <p>This lab will require a beginner’s level of verilog.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>TBD
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nycu-caslab/AAML2024-Lab3.git
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The testbench generates waveform to <code class="docutils literal notranslate"><span class="pre">TPU.vcd</span></code> or <code class="docutils literal notranslate"><span class="pre">TPU.fsdb</span></code> (change it in the <code class="docutils literal notranslate"><span class="pre">TESTBENCH.v</span></code>).
+<p>The testbench generates waveform to <code class="docutils literal notranslate"><span class="pre">dump.vcd</span></code> or <code class="docutils literal notranslate"><span class="pre">dump.fsdb</span></code> (change the output file in the <code class="docutils literal notranslate"><span class="pre">TESTBENCH.v</span></code>).
 After running the simulation each time, you may use your waveform viewer to check it out.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>nWave (TPU.fsdb | TPU.vcd)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>nWave (dump.fsdb | dump.vcd)
 or
-gtkwave TPU.vcd
+gtkwave dump.vcd
 </pre></div>
 </div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The default simulator in the makefile is <code class="docutils literal notranslate"><span class="pre">iverilog</span></code>.
-If you have the licence of <code class="docutils literal notranslate"><span class="pre">ncverilog</span></code> and want faster simulation, you may use the <code class="docutils literal notranslate"><span class="pre">Makefile_ncverilog</span></code>.</p>
+<ol class="arabic simple">
+<li><p>The default verilog compiler in the makefile is <code class="docutils literal notranslate"><span class="pre">iverilog</span></code>, and using <code class="docutils literal notranslate"><span class="pre">vvp</span></code> as simulator.
+If you have the licence of <code class="docutils literal notranslate"><span class="pre">VCS</span></code> and want faster simulation, you may use the <code class="docutils literal notranslate"><span class="pre">Makefile_vcs</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Makefile_ncverilog</span></code> is for reference only, our Cadence licence has been down for a while :(</p></li>
+</ol>
 </div>
 </section>
 <section id="interface-and-block-diagram">
