@@ -2,7 +2,7 @@
 
 ## Goal of this lab
 ---
-- [Porting and Profiling the Models - 10%](#porting-and-profiling-the-models-20)
+- [Porting and Profiling the Models - 10%](#porting-and-profiling-the-models-10)
 - [Accelerating the Logistic Function - 60%](#accelerating-the-logistic-function-60)
 - [Accelerating the Softmax Function - 20%](#accelerating-the-softmax-function-20)
 - [Questions in the Demo - 10%](#questions-in-the-demo-10)
@@ -13,31 +13,35 @@ Modern models frequently utilize specialized activation functions that involve c
 
 ## Porting and Profiling the Models - 10%
 ---
-### Porting the New Models - 5%
+### Porting the New Model and Tests - 5%
 
-In this lab, we will provide you two models:
+In this lab, we provide you a new model and the project template. Follow the instrusctions below to install them.
 
-1. Logistic Test Model
+1. Project Template with Tests
 
-    This model serves as a benchmark to verify the correctness of your design. In other words, your design should pass the golden test of this model in order to get the score.
+    The project template contains some tests and files you'll use in this lab.
+    ```sh
+    $ cd ${CFU_ROOT}/proj/
+    $ wget https://github.com/nycu-caslab/AAML2024/raw/main/lab4_util/lab4_template.zip
+    $ unzip lab4_template.zip
+    ```
 
-2. MobileViT
+2. MobileViT Model
 
-    This is the actual model we aim to accelerate. We will use this model to benchmark the performance of your design.
+    This is the model we aim to accelerate. We will use this model to benchmark the performance of your design.
+    ```sh
+    $ cd ${CFU_ROOT}/common/src/models
+    $ wget https://github.com/nycu-caslab/AAML2024/raw/main/lab4_util/lab4_model.zip
+    $ unzip lab4_model.zip
+    ```
 
-> [model download link](https://drive.google.com/file/d/1_aUHWVC8kYe3A0T-A1ACcONjoYsGji_F/view?usp=sharing)
-
-After downloading and unzipping the files, place the two model folders directly into the `CFU-Playground/common/src/models` directory.
-
-Just like we did in lab 1, we should modify some files to add the new models: 
+After that, just like we did in lab 1, we should modify some files to add the new models: 
 
 `CFU-Playground/common/src/models/models.c`  
-(You can also directly use the `models.c` file provided in the .zip archive.)  
 ```c
 #include "models/ds_cnn_stream_fe/ds_cnn.h"
 // add codes below
 #include "models/mobileViT_xxs/mobileViT.h"
-#include "models/logistic_test/logistic_test.h"
 
 ...
 
@@ -47,9 +51,6 @@ Just like we did in lab 1, we should modify some files to add the new models:
 // add codes below
 #if defined(INCLUDE_MODEL_MOBILE_VIT_XXS)
         MENU_ITEM(AUTO_INC_CHAR, "MobileViT xxs", mobileViT_xxs_menu),
-#endif
-#if defined(INCLUDE_MODEL_LOGISTIC)
-        MENU_ITEM(AUTO_INC_CHAR, "Logistic test", logistic_test_model_menu),
 #endif
 ```
 
@@ -62,21 +63,80 @@ Just like we did in lab 1, we should modify some files to add the new models:
 #ifdef INCLUDE_MODEL_MOBILE_VIT_XXS
     16384 * 1024,
 #endif
-#ifdef INCLUDE_MODEL_LOGISTIC
-    50 * 1024,
-#endif
 ```
 
-`CFU-Playground/proj/<lab4 proj folder>/Makefile`
+`CFU-Playground/proj/<lab4 proj folder>/Makefile`  
+(This has been done in the project template.)
 ```sh
 DEFINES += INCLUDE_MODEL_MOBILE_VIT_XXS
-DEFINES += INCLUDE_MODEL_LOGISTIC
 ```
 
-Also, please follow this guide to **add the new operations required by the MobileViT**.
+Also, since MobileViT contains some ops that are not natively supported, please follow this guide to **add the new operations required by the MobileViT**.
 > [Add ops in CFU_Playground](https://hackmd.io/@Tsai-Wooo/SkjTbXdJ0)
 
-After completing these steps, you should be able to run the two new models and obtain the scores for this section.
+After completing these steps, you should be able to run the MobileViT model and the Tests in the `Project menu`.
+```sh
+$ make prog EXTRA_LITEX_ARGS="--cpu-variant=perf+cfu"
+$ make load
+```
+* MobileViT result of zeros input without any modification
+```
+ Counter |  Total | Starts | Average |     Raw
+---------+--------+--------+---------+--------------
+    0    |     0  |     0  |   n/a   |            0
+    1    |     0  |     0  |   n/a   |            0
+    2    |     0  |     0  |   n/a   |            0
+    3    |     0  |     0  |   n/a   |            0
+    4    |     0  |     0  |   n/a   |            0
+    5    |   145M |     9  |    16M  |    145244066
+    6    |  1318M |    37  |    36M  |   1317968736
+    7    |     0  |     0  |   n/a   |            0
+  5234M (   5233667340 )  cycles total
+0 : -128,
+1 : 67,
+2 : 57,
+3 : -72,
+4 : 100,
+5 : 37,
+6 : -9,
+7 : -8,
+8 : -6,
+9 : -21,
+```
+* Tests for Logistic and Softmax
+```
+CFU Playground
+==============
+ 1: TfLM Models menu
+ 2: Functional CFU Tests
+>3: Project menu
+ 4: Performance Counter Tests
+ 5: TFLite Unit Tests
+ 6: Benchmarks
+ 7: Util Tests
+ 8: Embench IoT
+ d: Donut demo
+main> 3
+
+Running Project menu
+
+Project Menu
+============
+ 1: Run logistic tests
+ 2: Run softmax tests
+ x: eXit to previous menu
+project> 1
+
+Running Run logistic tests
+
+LOGISTIC TEST:
+Testing LogisticQuantizedInt8AroundZeroShouldMatchGolden
+Testing LogisticQuantizedInt8NarrowRangeShouldMatchGolden
+Testing LogisticQuantizedInt8BasicShouldMatchGolden
+Testing LogisticQuantizedInt8WideRangeShouldMatchGolden
+4/4 tests passed
+~~~ALL TESTS PASSED~~~
+```
 
 ### Profiling the MobileViT - 5%
 
@@ -112,7 +172,8 @@ Next, trace the code of the Logistic function to identify the **complex mathemat
 Make sure to present your findings to the TAs during the demo.
 ```{hint}
 You can start tracing the code from this file, and the model will use the topmost overloaded `Logistic(...)` function:  
-`CFU-Playground/third_party/tflite-micro/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h` Then, you will find the mathematical computations are defined in:  
+`CFU-Playground/third_party/tflite-micro/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h`  
+Then, you will find the mathematical computations are defined in:  
 `CFU-Playground/third_party/tflite-micro/third_party/gemmlowp/fixedpoint/fixedpoint.h`
 ```
 
@@ -123,7 +184,8 @@ You can start tracing the code from this file, and the model will use the topmos
 \text{logistic}(x) = \frac{1}{1 + e^{-x}}
 \end{gather*}
 
-Add the integer version of the Logistic function to your project.
+(We have done these for you in the template.)  
+Add the integer version of the Logistic function to your project. 
 ```sh
 $ cp \
   ../../third_party/tflite-micro/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h \
@@ -137,7 +199,6 @@ inline void Logistic(int32_t input_zero_point, int32_t input_range_radius,
                      int32_t input_multiplier, int32_t input_left_shift,
                      int32_t input_size, const int8_t* input_data,
                      int8_t* output_data) {
-  // Integer bits must be in sync with Prepare() function.
   perf_enable_counter(6);
 
   ...
@@ -148,26 +209,28 @@ inline void Logistic(int32_t input_zero_point, int32_t input_range_radius,
 ````
 
 ### Evaluation Criteria
-
-```{attention} 
-You will get **0%** if you can't pass the golden test of the Logistic Test Model.
-```
+You should first pass the `LOGISTIC TEST` in the `Project menu`, then run MobileViT with any input and obtain scores based on the criteria.
 
 | Cycles of Counter 6 | > 1000M | 400~1000M | 140~400M | < 140M |
 | ------------------- | ------- | --------- |:-------- |:------ |
-| Score               | 0       | 20        | 40       | 60     |
+| Score               | 0       | 10        | 30       | 60     |
 
 ```{hint}
 You may need to accelerate both the exponential and reciprocal parts in order to meet the full score cycle count criteria.
 ```
 
+```{attention} 
+You will get **0%** if you can't pass all `LOGISTIC TEST` in the `Project menu`.
+```
+
 ### Guide
 
 ```{note}
-**You are not required to follow to the provided guide below**. Instead, you are encouraged to use any method to accelerate model inference, provided that it passes the golden test of the Logistic Test Model.
+**You are not required to follow to the provided guide below**. Instead, feel free to use any method to accelerate the inference of Logistic function, provided that it passes the unit test.
 ```
-First of all, it is essential to familiarize yourself with **fixed-point** arithmetic and the `FixedPoint` class defined in `fixedpoint.h`. The key components and functions you are likely to use within the `FixedPoint` class include `kIntegerBits`, `FromRaw()`, and `raw()`.  
-Additionally, You can refer to [Wikipedia - Q format notation](https://en.wikipedia.org/wiki/Q_(number_format)) and the comments for the `FixedPoint` class in `fixedpoint.h` to help you understand fixed-point arithmetic. The [Q format converter](https://chummersone.github.io/qformat.html#converter) is also a very useful tool that you can use to convert between fixed-point and floating-point numbers, which will assist you in debugging.
+First of all, it is essential to familiarize yourself with **fixed-point** arithmetic and the `FixedPoint` class defined in `fixedpoint.h`. The key components and functions you are likely to use within the `FixedPoint` class include `kIntegerBits`, `FromRaw()`, and `raw()`.
+
+Additionally, You can refer to [Wikipedia - Q format notation](https://en.wikipedia.org/wiki/Q_(number_format)) and the comments for the `FixedPoint` class in `fixedpoint.h` to help you understand fixed-point arithmetic. **The [Q format converter](https://chummersone.github.io/qformat.html#converter) is also a very useful tool** that you can use to convert between fixed-point and floating-point numbers, which will definitely assist you in debugging.
 
 ```cpp
 // Part 2: the FixedPoint class.
@@ -232,39 +295,12 @@ Given the symmetry of the Logistic function, it's only necessary to consider eit
 ```
 
 #### Hardware
-As for the hardware unit section, you should first familiarize yourself with the CFU handshake signals.
+For the hardware unit section, it’s important to first familiarize yourself with the **val/rdy interface** of the CFU. In Lab 2, the calculation required only a single cycle, making it straightforward to handle. However, in this lab, your CFU operations may take more than one cycle to complete. To better understand how to manage multi-cycle operations, refer to this article for examples and guidance.
 > [Details and Use Cases of the CPU <-> CFU interface](https://cfu-playground.readthedocs.io/en/latest/interface.html)
-
-Here is a dummy example:
-```verilog
-assign cmd_ready = ~rsp_valid & ~calculating;
-always @(posedge clk) begin
-    if (reset) begin
-        ...
-    end else if (rsp_valid) begin
-        rsp_valid <= ~rsp_ready;
-    end else if (cmd_valid) begin
-        if (...) begin
-            ...
-            input_valid <= 1;
-            calculating <= 1;
-        end
-        ...
-    end
-    else if (input_valid) begin
-        input_valid <= 0;
-    end
-    else if (finish == 1) begin
-        calculating <= 0;
-        rsp_valid <= 1'b1;
-        rsp_payload_outputs_0 <= result;
-    end
-end
-```
 
 For calculating results using hardware, you have the option to employ either a Lookup Table or Mathematical Approximation methods, such as the Taylor Series, Newton-Raphson division, or Polynomial Approximation.
 
-In this lab, for the **exponential function, we recommend using either a Lookup Table or the Taylor Series**. For the **reciprocal function, we suggest using a Lookup Table or the Newton-Raphson division method**, similar to the approach used in one_over_one_plus_x_for_x_in_0_1(), but implemented in hardware.
+In this lab, for the **exponential function, we recommend using either a Lookup Table or the Taylor Series**. For the **reciprocal function, we suggest using a Lookup Table or the Newton-Raphson division method**, similar to the approach used in `one_over_one_plus_x_for_x_in_0_1()`, but implemented in hardware.
 
 ## Accelerating the Softmax Function - 20%
 
@@ -300,19 +336,21 @@ inline void Softmax(const SoftmaxParams& params,
 
 ### Evaluation Criteria
 
-| Cycles of Counter 5 | > 100M | 30~100M | < 30M |
+You should first pass the `SOFTMAX TEST` in the `Project menu`, then run MobileViT with any input and obtain scores based on the criteria.
+
+| Cycles of Counter 5 | > 60M  | 30~60M  | < 30M |
 | ------------------- | ------ |:------- |:----- |
 | Score               | 0      | 10      | 20    |
+
+```{attention} 
+You will get **0%** if you can't pass all `SOFTMAX TEST` in the `Project menu`.
+```
 
 ### Guide
 
 Following the previous approach, replacing the exponential and reciprocal functions with CFU operations is a good idea. The CFU operations designed for the Logistic function might work here too. 
 
 But, be careful: the fixed-point integer bits used for the exponential function are different in the Logistic and Softmax functions—**the Logistic uses 4 and the Softmax uses 5**. Pay close attention to this detail.
-
-```{note}
-You'll need to use the designs from Lab 3 and Lab 4 in Lab 5, so I recommend not fully utilizing all the hardware resources in this lab. Otherwise, you might run into issues with insufficient hardware resources in Lab 5.
-```
 
 ## Questions in the Demo - 10%
 

@@ -311,7 +311,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal-of-this-lab">Goal of this lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-and-profiling-the-models-10">Porting and Profiling the Models - 10%</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-the-new-models-5">Porting the New Models - 5%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-the-new-model-and-tests-5">Porting the New Model and Tests - 5%</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-the-mobilevit-5">Profiling the MobileViT - 5%</a></li>
 </ul>
 </li>
@@ -348,7 +348,7 @@ document.write(`
 <h2>Goal of this lab<a class="headerlink" href="#goal-of-this-lab" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><a class="reference internal" href="#porting-and-profiling-the-models-20"><span class="xref myst">Porting and Profiling the Models - 10%</span></a></p></li>
+<li><p><a class="reference internal" href="#porting-and-profiling-the-models-10"><span class="xref myst">Porting and Profiling the Models - 10%</span></a></p></li>
 <li><p><a class="reference internal" href="#accelerating-the-logistic-function-60"><span class="xref myst">Accelerating the Logistic Function - 60%</span></a></p></li>
 <li><p><a class="reference internal" href="#accelerating-the-softmax-function-20"><span class="xref myst">Accelerating the Softmax Function - 20%</span></a></p></li>
 <li><p><a class="reference internal" href="#questions-in-the-demo-10"><span class="xref myst">Questions in the Demo - 10%</span></a></p></li>
@@ -362,28 +362,32 @@ document.write(`
 <section id="porting-and-profiling-the-models-10">
 <h2>Porting and Profiling the Models - 10%<a class="headerlink" href="#porting-and-profiling-the-models-10" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
-<section id="porting-the-new-models-5">
-<h3>Porting the New Models - 5%<a class="headerlink" href="#porting-the-new-models-5" title="Link to this heading">#</a></h3>
-<p>In this lab, we will provide you two models:</p>
+<section id="porting-the-new-model-and-tests-5">
+<h3>Porting the New Model and Tests - 5%<a class="headerlink" href="#porting-the-new-model-and-tests-5" title="Link to this heading">#</a></h3>
+<p>In this lab, we provide you a new model and the project template. Follow the instrusctions below to install them.</p>
 <ol class="arabic">
-<li><p>Logistic Test Model</p>
-<p>This model serves as a benchmark to verify the correctness of your design. In other words, your design should pass the golden test of this model in order to get the score.</p>
+<li><p>Project Template with Tests</p>
+<p>The project template contains some tests and files you’ll use in this lab.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">CFU_ROOT</span><span class="si">}</span>/proj/
+$<span class="w"> </span>wget<span class="w"> </span>https://github.com/nycu-caslab/AAML2024/raw/main/lab4_util/lab4_template.zip
+$<span class="w"> </span>unzip<span class="w"> </span>lab4_template.zip
+</pre></div>
+</div>
 </li>
-<li><p>MobileViT</p>
-<p>This is the actual model we aim to accelerate. We will use this model to benchmark the performance of your design.</p>
+<li><p>MobileViT Model</p>
+<p>This is the model we aim to accelerate. We will use this model to benchmark the performance of your design.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">CFU_ROOT</span><span class="si">}</span>/common/src/models
+$<span class="w"> </span>wget<span class="w"> </span>https://github.com/nycu-caslab/AAML2024/raw/main/lab4_util/lab4_model.zip
+$<span class="w"> </span>unzip<span class="w"> </span>lab4_model.zip
+</pre></div>
+</div>
 </li>
 </ol>
-<blockquote>
-<div><p><a class="reference external" href="https://drive.google.com/file/d/1_aUHWVC8kYe3A0T-A1ACcONjoYsGji_F/view?usp=sharing">model download link</a></p>
-</div></blockquote>
-<p>After downloading and unzipping the files, place the two model folders directly into the <code class="docutils literal notranslate"><span class="pre">CFU-Playground/common/src/models</span></code> directory.</p>
-<p>Just like we did in lab 1, we should modify some files to add the new models:</p>
-<p><code class="docutils literal notranslate"><span class="pre">CFU-Playground/common/src/models/models.c</span></code><br />
-(You can also directly use the <code class="docutils literal notranslate"><span class="pre">models.c</span></code> file provided in the .zip archive.)</p>
+<p>After that, just like we did in lab 1, we should modify some files to add the new models:</p>
+<p><code class="docutils literal notranslate"><span class="pre">CFU-Playground/common/src/models/models.c</span></code></p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;models/ds_cnn_stream_fe/ds_cnn.h&quot;</span>
 <span class="c1">// add codes below</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;models/mobileViT_xxs/mobileViT.h&quot;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;models/logistic_test/logistic_test.h&quot;</span>
 
 <span class="p">...</span>
 
@@ -393,9 +397,6 @@ document.write(`
 <span class="c1">// add codes below</span>
 <span class="cp">#if defined(INCLUDE_MODEL_MOBILE_VIT_XXS)</span>
 <span class="w">        </span><span class="n">MENU_ITEM</span><span class="p">(</span><span class="n">AUTO_INC_CHAR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MobileViT xxs&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mobileViT_xxs_menu</span><span class="p">),</span>
-<span class="cp">#endif</span>
-<span class="cp">#if defined(INCLUDE_MODEL_LOGISTIC)</span>
-<span class="w">        </span><span class="n">MENU_ITEM</span><span class="p">(</span><span class="n">AUTO_INC_CHAR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Logistic test&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">logistic_test_model_menu</span><span class="p">),</span>
 <span class="cp">#endif</span>
 </pre></div>
 </div>
@@ -407,21 +408,84 @@ document.write(`
 <span class="cp">#ifdef INCLUDE_MODEL_MOBILE_VIT_XXS</span>
 <span class="w">    </span><span class="mi">16384</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span>
 <span class="cp">#endif</span>
-<span class="cp">#ifdef INCLUDE_MODEL_LOGISTIC</span>
-<span class="w">    </span><span class="mi">50</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span>
-<span class="cp">#endif</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">CFU-Playground/proj/&lt;lab4</span> <span class="pre">proj</span> <span class="pre">folder&gt;/Makefile</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">CFU-Playground/proj/&lt;lab4</span> <span class="pre">proj</span> <span class="pre">folder&gt;/Makefile</span></code><br />
+(This has been done in the project template.)</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">DEFINES</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>INCLUDE_MODEL_MOBILE_VIT_XXS
-<span class="nv">DEFINES</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>INCLUDE_MODEL_LOGISTIC
 </pre></div>
 </div>
-<p>Also, please follow this guide to <strong>add the new operations required by the MobileViT</strong>.</p>
+<p>Also, since MobileViT contains some ops that are not natively supported, please follow this guide to <strong>add the new operations required by the MobileViT</strong>.</p>
 <blockquote>
 <div><p><a class="reference external" href="https://hackmd.io/&#64;Tsai-Wooo/SkjTbXdJ0">Add ops in CFU_Playground</a></p>
 </div></blockquote>
-<p>After completing these steps, you should be able to run the two new models and obtain the scores for this section.</p>
+<p>After completing these steps, you should be able to run the MobileViT model and the Tests in the <code class="docutils literal notranslate"><span class="pre">Project</span> <span class="pre">menu</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>make<span class="w"> </span>prog<span class="w"> </span><span class="nv">EXTRA_LITEX_ARGS</span><span class="o">=</span><span class="s2">&quot;--cpu-variant=perf+cfu&quot;</span>
+$<span class="w"> </span>make<span class="w"> </span>load
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>MobileViT result of zeros input without any modification</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">Counter</span> <span class="o">|</span>  <span class="n">Total</span> <span class="o">|</span> <span class="n">Starts</span> <span class="o">|</span> <span class="n">Average</span> <span class="o">|</span>     <span class="n">Raw</span>
+<span class="o">---------+--------+--------+---------+--------------</span>
+    <span class="mi">0</span>    <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>   <span class="n">n</span><span class="o">/</span><span class="n">a</span>   <span class="o">|</span>            <span class="mi">0</span>
+    <span class="mi">1</span>    <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>   <span class="n">n</span><span class="o">/</span><span class="n">a</span>   <span class="o">|</span>            <span class="mi">0</span>
+    <span class="mi">2</span>    <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>   <span class="n">n</span><span class="o">/</span><span class="n">a</span>   <span class="o">|</span>            <span class="mi">0</span>
+    <span class="mi">3</span>    <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>   <span class="n">n</span><span class="o">/</span><span class="n">a</span>   <span class="o">|</span>            <span class="mi">0</span>
+    <span class="mi">4</span>    <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>   <span class="n">n</span><span class="o">/</span><span class="n">a</span>   <span class="o">|</span>            <span class="mi">0</span>
+    <span class="mi">5</span>    <span class="o">|</span>   <span class="mi">145</span><span class="n">M</span> <span class="o">|</span>     <span class="mi">9</span>  <span class="o">|</span>    <span class="mi">16</span><span class="n">M</span>  <span class="o">|</span>    <span class="mi">145244066</span>
+    <span class="mi">6</span>    <span class="o">|</span>  <span class="mi">1318</span><span class="n">M</span> <span class="o">|</span>    <span class="mi">37</span>  <span class="o">|</span>    <span class="mi">36</span><span class="n">M</span>  <span class="o">|</span>   <span class="mi">1317968736</span>
+    <span class="mi">7</span>    <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>     <span class="mi">0</span>  <span class="o">|</span>   <span class="n">n</span><span class="o">/</span><span class="n">a</span>   <span class="o">|</span>            <span class="mi">0</span>
+  <span class="mi">5234</span><span class="n">M</span> <span class="p">(</span>   <span class="mi">5233667340</span> <span class="p">)</span>  <span class="n">cycles</span> <span class="n">total</span>
+<span class="mi">0</span> <span class="p">:</span> <span class="o">-</span><span class="mi">128</span><span class="p">,</span>
+<span class="mi">1</span> <span class="p">:</span> <span class="mi">67</span><span class="p">,</span>
+<span class="mi">2</span> <span class="p">:</span> <span class="mi">57</span><span class="p">,</span>
+<span class="mi">3</span> <span class="p">:</span> <span class="o">-</span><span class="mi">72</span><span class="p">,</span>
+<span class="mi">4</span> <span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+<span class="mi">5</span> <span class="p">:</span> <span class="mi">37</span><span class="p">,</span>
+<span class="mi">6</span> <span class="p">:</span> <span class="o">-</span><span class="mi">9</span><span class="p">,</span>
+<span class="mi">7</span> <span class="p">:</span> <span class="o">-</span><span class="mi">8</span><span class="p">,</span>
+<span class="mi">8</span> <span class="p">:</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span>
+<span class="mi">9</span> <span class="p">:</span> <span class="o">-</span><span class="mi">21</span><span class="p">,</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Tests for Logistic and Softmax</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CFU</span> <span class="n">Playground</span>
+<span class="o">==============</span>
+ <span class="mi">1</span><span class="p">:</span> <span class="n">TfLM</span> <span class="n">Models</span> <span class="n">menu</span>
+ <span class="mi">2</span><span class="p">:</span> <span class="n">Functional</span> <span class="n">CFU</span> <span class="n">Tests</span>
+<span class="o">&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">Project</span> <span class="n">menu</span>
+ <span class="mi">4</span><span class="p">:</span> <span class="n">Performance</span> <span class="n">Counter</span> <span class="n">Tests</span>
+ <span class="mi">5</span><span class="p">:</span> <span class="n">TFLite</span> <span class="n">Unit</span> <span class="n">Tests</span>
+ <span class="mi">6</span><span class="p">:</span> <span class="n">Benchmarks</span>
+ <span class="mi">7</span><span class="p">:</span> <span class="n">Util</span> <span class="n">Tests</span>
+ <span class="mi">8</span><span class="p">:</span> <span class="n">Embench</span> <span class="n">IoT</span>
+ <span class="n">d</span><span class="p">:</span> <span class="n">Donut</span> <span class="n">demo</span>
+<span class="n">main</span><span class="o">&gt;</span> <span class="mi">3</span>
+
+<span class="n">Running</span> <span class="n">Project</span> <span class="n">menu</span>
+
+<span class="n">Project</span> <span class="n">Menu</span>
+<span class="o">============</span>
+ <span class="mi">1</span><span class="p">:</span> <span class="n">Run</span> <span class="n">logistic</span> <span class="n">tests</span>
+ <span class="mi">2</span><span class="p">:</span> <span class="n">Run</span> <span class="n">softmax</span> <span class="n">tests</span>
+ <span class="n">x</span><span class="p">:</span> <span class="n">eXit</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">menu</span>
+<span class="n">project</span><span class="o">&gt;</span> <span class="mi">1</span>
+
+<span class="n">Running</span> <span class="n">Run</span> <span class="n">logistic</span> <span class="n">tests</span>
+
+<span class="n">LOGISTIC</span> <span class="n">TEST</span><span class="p">:</span>
+<span class="n">Testing</span> <span class="n">LogisticQuantizedInt8AroundZeroShouldMatchGolden</span>
+<span class="n">Testing</span> <span class="n">LogisticQuantizedInt8NarrowRangeShouldMatchGolden</span>
+<span class="n">Testing</span> <span class="n">LogisticQuantizedInt8BasicShouldMatchGolden</span>
+<span class="n">Testing</span> <span class="n">LogisticQuantizedInt8WideRangeShouldMatchGolden</span>
+<span class="mi">4</span><span class="o">/</span><span class="mi">4</span> <span class="n">tests</span> <span class="n">passed</span>
+<span class="o">~~~</span><span class="n">ALL</span> <span class="n">TESTS</span> <span class="n">PASSED</span><span class="o">~~~</span>
+</pre></div>
+</div>
 </section>
 <section id="profiling-the-mobilevit-5">
 <h3>Profiling the MobileViT - 5%<a class="headerlink" href="#profiling-the-mobilevit-5" title="Link to this heading">#</a></h3>
@@ -455,7 +519,8 @@ Perf counters not enabled.
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>You can start tracing the code from this file, and the model will use the topmost overloaded <code class="docutils literal notranslate"><span class="pre">Logistic(...)</span></code> function:<br />
-<code class="docutils literal notranslate"><span class="pre">CFU-Playground/third_party/tflite-micro/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h</span></code> Then, you will find the mathematical computations are defined in:<br />
+<code class="docutils literal notranslate"><span class="pre">CFU-Playground/third_party/tflite-micro/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h</span></code><br />
+Then, you will find the mathematical computations are defined in:<br />
 <code class="docutils literal notranslate"><span class="pre">CFU-Playground/third_party/tflite-micro/third_party/gemmlowp/fixedpoint/fixedpoint.h</span></code></p>
 </div>
 </section>
@@ -467,7 +532,8 @@ Perf counters not enabled.
 \[\begin{gather*}
 \text{logistic}(x) = \frac{1}{1 + e^{-x}}
 \end{gather*}\]</div>
-<p>Add the integer version of the Logistic function to your project.</p>
+<p>(We have done these for you in the template.)<br />
+Add the integer version of the Logistic function to your project.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cp<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>../../third_party/tflite-micro/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>src/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h
@@ -480,7 +546,6 @@ Perf counters not enabled.
 <span class="w">                     </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">input_multiplier</span><span class="p">,</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">input_left_shift</span><span class="p">,</span>
 <span class="w">                     </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">input_size</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int8_t</span><span class="o">*</span><span class="w"> </span><span class="n">input_data</span><span class="p">,</span>
 <span class="w">                     </span><span class="kt">int8_t</span><span class="o">*</span><span class="w"> </span><span class="n">output_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Integer bits must be in sync with Prepare() function.</span>
 <span class="w">  </span><span class="n">perf_enable_counter</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
 
 <span class="w">  </span><span class="p">...</span>
@@ -492,10 +557,7 @@ Perf counters not enabled.
 </div>
 <section id="evaluation-criteria">
 <h3>Evaluation Criteria<a class="headerlink" href="#evaluation-criteria" title="Link to this heading">#</a></h3>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>You will get <strong>0%</strong> if you can’t pass the golden test of the Logistic Test Model.</p>
-</div>
+<p>You should first pass the <code class="docutils literal notranslate"><span class="pre">LOGISTIC</span> <span class="pre">TEST</span></code> in the <code class="docutils literal notranslate"><span class="pre">Project</span> <span class="pre">menu</span></code>, then run MobileViT with any input and obtain scores based on the criteria.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Cycles of Counter 6</p></th>
@@ -508,8 +570,8 @@ Perf counters not enabled.
 <tbody>
 <tr class="row-even"><td><p>Score</p></td>
 <td><p>0</p></td>
-<td><p>20</p></td>
-<td class="text-left"><p>40</p></td>
+<td><p>10</p></td>
+<td class="text-left"><p>30</p></td>
 <td class="text-left"><p>60</p></td>
 </tr>
 </tbody>
@@ -519,15 +581,19 @@ Perf counters not enabled.
 <p class="admonition-title">Hint</p>
 <p>You may need to accelerate both the exponential and reciprocal parts in order to meet the full score cycle count criteria.</p>
 </div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>You will get <strong>0%</strong> if you can’t pass all <code class="docutils literal notranslate"><span class="pre">LOGISTIC</span> <span class="pre">TEST</span></code> in the <code class="docutils literal notranslate"><span class="pre">Project</span> <span class="pre">menu</span></code>.</p>
+</div>
 </section>
 <section id="guide">
 <h3>Guide<a class="headerlink" href="#guide" title="Link to this heading">#</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><strong>You are not required to follow to the provided guide below</strong>. Instead, you are encouraged to use any method to accelerate model inference, provided that it passes the golden test of the Logistic Test Model.</p>
+<p><strong>You are not required to follow to the provided guide below</strong>. Instead, feel free to use any method to accelerate the inference of Logistic function, provided that it passes the unit test.</p>
 </div>
-<p>First of all, it is essential to familiarize yourself with <strong>fixed-point</strong> arithmetic and the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class defined in <code class="docutils literal notranslate"><span class="pre">fixedpoint.h</span></code>. The key components and functions you are likely to use within the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class include <code class="docutils literal notranslate"><span class="pre">kIntegerBits</span></code>, <code class="docutils literal notranslate"><span class="pre">FromRaw()</span></code>, and <code class="docutils literal notranslate"><span class="pre">raw()</span></code>.<br />
-Additionally, You can refer to <a class="reference external" href="https://en.wikipedia.org/wiki/Q_(number_format)">Wikipedia - Q format notation</a> and the comments for the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class in <code class="docutils literal notranslate"><span class="pre">fixedpoint.h</span></code> to help you understand fixed-point arithmetic. The <a class="reference external" href="https://chummersone.github.io/qformat.html#converter">Q format converter</a> is also a very useful tool that you can use to convert between fixed-point and floating-point numbers, which will assist you in debugging.</p>
+<p>First of all, it is essential to familiarize yourself with <strong>fixed-point</strong> arithmetic and the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class defined in <code class="docutils literal notranslate"><span class="pre">fixedpoint.h</span></code>. The key components and functions you are likely to use within the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class include <code class="docutils literal notranslate"><span class="pre">kIntegerBits</span></code>, <code class="docutils literal notranslate"><span class="pre">FromRaw()</span></code>, and <code class="docutils literal notranslate"><span class="pre">raw()</span></code>.</p>
+<p>Additionally, You can refer to <a class="reference external" href="https://en.wikipedia.org/wiki/Q_(number_format)">Wikipedia - Q format notation</a> and the comments for the <code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code> class in <code class="docutils literal notranslate"><span class="pre">fixedpoint.h</span></code> to help you understand fixed-point arithmetic. <strong>The <a class="reference external" href="https://chummersone.github.io/qformat.html#converter">Q format converter</a> is also a very useful tool</strong> that you can use to convert between fixed-point and floating-point numbers, which will definitely assist you in debugging.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Part 2: the FixedPoint class.</span>
 
 <span class="c1">// A FixedPoint object represents a fixed-point value stored in the underlying</span>
@@ -590,38 +656,12 @@ Additionally, You can refer to <a class="reference external" href="https://en.wi
 </section>
 <section id="hardware">
 <h4>Hardware<a class="headerlink" href="#hardware" title="Link to this heading">#</a></h4>
-<p>As for the hardware unit section, you should first familiarize yourself with the CFU handshake signals.</p>
+<p>For the hardware unit section, it’s important to first familiarize yourself with the <strong>val/rdy interface</strong> of the CFU. In Lab 2, the calculation required only a single cycle, making it straightforward to handle. However, in this lab, your CFU operations may take more than one cycle to complete. To better understand how to manage multi-cycle operations, refer to this article for examples and guidance.</p>
 <blockquote>
 <div><p><a class="reference external" href="https://cfu-playground.readthedocs.io/en/latest/interface.html">Details and Use Cases of the CPU &lt;-&gt; CFU interface</a></p>
 </div></blockquote>
-<p>Here is a dummy example:</p>
-<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span><span class="w"> </span><span class="n">cmd_ready</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="n">rsp_valid</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="o">~</span><span class="n">calculating</span><span class="p">;</span>
-<span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">reset</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">        </span><span class="p">...</span>
-<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rsp_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">        </span><span class="n">rsp_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="o">~</span><span class="n">rsp_ready</span><span class="p">;</span>
-<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cmd_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">            </span><span class="p">...</span>
-<span class="w">            </span><span class="n">input_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
-<span class="w">            </span><span class="n">calculating</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
-<span class="w">        </span><span class="k">end</span>
-<span class="w">        </span><span class="p">...</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">input_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">        </span><span class="n">input_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">finish</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">        </span><span class="n">calculating</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
-<span class="w">        </span><span class="n">rsp_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
-<span class="w">        </span><span class="n">rsp_payload_outputs_0</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="k">end</span>
-</pre></div>
-</div>
 <p>For calculating results using hardware, you have the option to employ either a Lookup Table or Mathematical Approximation methods, such as the Taylor Series, Newton-Raphson division, or Polynomial Approximation.</p>
-<p>In this lab, for the <strong>exponential function, we recommend using either a Lookup Table or the Taylor Series</strong>. For the <strong>reciprocal function, we suggest using a Lookup Table or the Newton-Raphson division method</strong>, similar to the approach used in one_over_one_plus_x_for_x_in_0_1(), but implemented in hardware.</p>
+<p>In this lab, for the <strong>exponential function, we recommend using either a Lookup Table or the Taylor Series</strong>. For the <strong>reciprocal function, we suggest using a Lookup Table or the Newton-Raphson division method</strong>, similar to the approach used in <code class="docutils literal notranslate"><span class="pre">one_over_one_plus_x_for_x_in_0_1()</span></code>, but implemented in hardware.</p>
 </section>
 </section>
 </section>
@@ -657,11 +697,12 @@ Additionally, You can refer to <a class="reference external" href="https://en.wi
 </div>
 <section id="id1">
 <h3>Evaluation Criteria<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>You should first pass the <code class="docutils literal notranslate"><span class="pre">SOFTMAX</span> <span class="pre">TEST</span></code> in the <code class="docutils literal notranslate"><span class="pre">Project</span> <span class="pre">menu</span></code>, then run MobileViT with any input and obtain scores based on the criteria.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Cycles of Counter 5</p></th>
-<th class="head"><p>&gt; 100M</p></th>
-<th class="head text-left"><p>30~100M</p></th>
+<th class="head"><p>&gt; 60M</p></th>
+<th class="head text-left"><p>30~60M</p></th>
 <th class="head text-left"><p>&lt; 30M</p></th>
 </tr>
 </thead>
@@ -674,15 +715,15 @@ Additionally, You can refer to <a class="reference external" href="https://en.wi
 </tbody>
 </table>
 </div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>You will get <strong>0%</strong> if you can’t pass all <code class="docutils literal notranslate"><span class="pre">SOFTMAX</span> <span class="pre">TEST</span></code> in the <code class="docutils literal notranslate"><span class="pre">Project</span> <span class="pre">menu</span></code>.</p>
+</div>
 </section>
 <section id="id2">
 <h3>Guide<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>Following the previous approach, replacing the exponential and reciprocal functions with CFU operations is a good idea. The CFU operations designed for the Logistic function might work here too.</p>
 <p>But, be careful: the fixed-point integer bits used for the exponential function are different in the Logistic and Softmax functions—<strong>the Logistic uses 4 and the Softmax uses 5</strong>. Pay close attention to this detail.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You’ll need to use the designs from Lab 3 and Lab 4 in Lab 5, so I recommend not fully utilizing all the hardware resources in this lab. Otherwise, you might run into issues with insufficient hardware resources in Lab 5.</p>
-</div>
 </section>
 </section>
 <section id="questions-in-the-demo-10">
@@ -757,7 +798,7 @@ Additionally, You can refer to <a class="reference external" href="https://en.wi
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal-of-this-lab">Goal of this lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-and-profiling-the-models-10">Porting and Profiling the Models - 10%</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-the-new-models-5">Porting the New Models - 5%</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#porting-the-new-model-and-tests-5">Porting the New Model and Tests - 5%</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-the-mobilevit-5">Profiling the MobileViT - 5%</a></li>
 </ul>
 </li>
