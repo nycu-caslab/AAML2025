@@ -373,6 +373,10 @@ $<span class="w"> </span>wget<span class="w"> </span>https://github.com/nycu-cas
 $<span class="w"> </span>unzip<span class="w"> </span>lab4_template.zip
 </pre></div>
 </div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">/src/tensorflow/lite/micro/kernels/</span></code> directory, you’ll find tests for the Logistic and Softmax functions, along with some updated kernels for MobileViT inference. <strong>DO NOT MODIFY</strong> any files in this directory.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 10/18,21:00: </span>Updated the template to include modified kernels.</p>
+</div>
 </li>
 <li><p>MobileViT Model</p>
 <p>This is the model we aim to accelerate. We will use this model to benchmark the performance of your design.</p>
@@ -415,10 +419,6 @@ $<span class="w"> </span>unzip<span class="w"> </span>lab4_model.zip
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">DEFINES</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>INCLUDE_MODEL_MOBILE_VIT_XXS
 </pre></div>
 </div>
-<p>Also, since MobileViT contains some ops that are not natively supported, please follow this guide to <strong>add the new operations required by the MobileViT</strong>.</p>
-<blockquote>
-<div><p><a class="reference external" href="https://hackmd.io/&#64;Tsai-Wooo/SkjTbXdJ0">Add ops in CFU_Playground</a></p>
-</div></blockquote>
 <p>After completing these steps, you should be able to run the MobileViT model and the Tests in the <code class="docutils literal notranslate"><span class="pre">Project</span> <span class="pre">menu</span></code>.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>make<span class="w"> </span>prog<span class="w"> </span><span class="nv">EXTRA_LITEX_ARGS</span><span class="o">=</span><span class="s2">&quot;--cpu-variant=perf+cfu&quot;</span>
 $<span class="w"> </span>make<span class="w"> </span>load

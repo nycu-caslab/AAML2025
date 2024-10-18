@@ -26,6 +26,12 @@ In this lab, we provide you a new model and the project template. Follow the ins
     $ unzip lab4_template.zip
     ```
 
+    In the `/src/tensorflow/lite/micro/kernels/` directory, you’ll find tests for the Logistic and Softmax functions, along with some updated kernels for MobileViT inference. **DO NOT MODIFY** any files in this directory.
+
+    ```{versionchanged} 10/18,21:00
+    Updated the template to include modified kernels.
+    ```
+
 2. MobileViT Model
 
     This is the model we aim to accelerate. We will use this model to benchmark the performance of your design.
@@ -70,9 +76,6 @@ After that, just like we did in lab 1, we should modify some files to add the ne
 ```sh
 DEFINES += INCLUDE_MODEL_MOBILE_VIT_XXS
 ```
-
-Also, since MobileViT contains some ops that are not natively supported, please follow this guide to **add the new operations required by the MobileViT**.
-> [Add ops in CFU_Playground](https://hackmd.io/@Tsai-Wooo/SkjTbXdJ0)
 
 After completing these steps, you should be able to run the MobileViT model and the Tests in the `Project menu`.
 ```sh
