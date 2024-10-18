@@ -26,9 +26,9 @@ In this lab, we provide you a new model and the project template. Follow the ins
     $ unzip lab4_template.zip
     ```
 
-    In the `/src/tensorflow/lite/micro/kernels/` directory, you’ll find tests for the Logistic and Softmax functions, along with some updated kernels for MobileViT inference. **DO NOT MODIFY** any files in this directory.
+    In the `/src/tensorflow/lite/micro/` directory, you’ll find tests for the Logistic and Softmax functions, along with some updated kernels for MobileViT inference. **DO NOT MODIFY** any files in this directory.
 
-    ```{versionchanged} 10/18,21:00
+    ```{versionchanged} 10/18,23:25
     Updated the template to include modified kernels.
     ```
 
