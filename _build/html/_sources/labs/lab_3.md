@@ -116,11 +116,8 @@ For the details of the mapping of matrix into global buffer. Please refer to the
 
 - Use asynchronous reset active low architecture.
 
-- The execution latency is limited in ***1,500,000*** cycles.
+- The execution latency ***per matrix multiplication*** (not the whole execution time) is limited in ***1,500,000*** cycles.
 
-```{note}
-Try to input data and calculate at the same time, otherwise you may exceed 1,500,000 cycles.
-```
 
 ## Basic Exercise #1 - 20%
 ---
@@ -179,7 +176,7 @@ Try to input data and calculate at the same time, otherwise you may exceed 1,500
 - Steps:
     1. refer to Basic Lab1
     2. `make verif4`
-        - 50 test cases of A(M * K) * B(K * N), where M, K, N ∈ [4, 127)
+        - 50 test cases of A(M * K) * B(K * N), where M, K, N ∈ [4, 128)
 
 
 ## Appendix

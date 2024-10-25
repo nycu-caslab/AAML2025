@@ -546,12 +546,8 @@ If you have the licence of <code class="docutils literal notranslate"><span clas
 <li><p>You should implement your own data loader, process elements(PEs), and controller which schedule the data in global buffer A &amp; B to be calculated in the systolic array.</p></li>
 <li><p>You need to set <code class="docutils literal notranslate"><span class="pre">busy</span></code> to high <em><strong>immediately</strong></em> after <code class="docutils literal notranslate"><span class="pre">in_valid</span></code> fall from high to low.</p></li>
 <li><p>Use asynchronous reset active low architecture.</p></li>
-<li><p>The execution latency is limited in <em><strong>1,500,000</strong></em> cycles.</p></li>
+<li><p>The execution latency <em><strong>per matrix multiplication</strong></em> (not the whole execution time) is limited in <em><strong>1,500,000</strong></em> cycles.</p></li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Try to input data and calculate at the same time, otherwise you may exceed 1,500,000 cycles.</p>
-</div>
 </section>
 </section>
 <section id="basic-exercise-1-20">
@@ -658,7 +654,7 @@ If you have the licence of <code class="docutils literal notranslate"><span clas
 <li><p>refer to Basic Lab1</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">verif4</span></code></p>
 <ul>
-<li><p>50 test cases of A(M * K) * B(K * N), where M, K, N ∈ [4, 127)</p></li>
+<li><p>50 test cases of A(M * K) * B(K * N), where M, K, N ∈ [4, 128)</p></li>
 </ul>
 </li>
 </ol>
