@@ -22,11 +22,10 @@ The matrix data needs to be transmitted from the CPU to the global buffers A and
 
 <img src="images/lab5/block_diagram.png" width="600px">
 
-### Deal with Signed int8
 
 The key word spotting model we intend to accelerate uses int8, and since negative values occur during computation, we need to modify it to support operations with signed integers.
 
-After finishing the modification, use the below command under the lab 3 directory `AAML2024-Lab3/` to make sure it can deal with int8 correctly.
+You may use the below command under the lab 3 directory `AAML2024-Lab3/` to make sure it can deal with int8 correctly.
 ```
 $ make verif_signed
 ```
