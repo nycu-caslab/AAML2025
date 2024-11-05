@@ -36,8 +36,7 @@ The pattern generator will generate 50 sets of two 16*16 matrix using int8 ∈ [
 
 Now you are ready to do the intergration! Create a new project folder just like previous labs.
 
-As shown in the block diagram, we will also be intergrating global buffer A, B and C into the CFU, we have provide a global buffer that utilises the BRAM resources of the FPGA instead of flip-flop, **please mind that this buffer does not have an async reset**, and make sure you have replace it, otherwise you may run into timing and utilization issues.
-
+As shown in the block diagram, we will also be intergrating global buffer A, B and C into the CFU, we have provide a global buffer that utilises the BRAM resources of the FPGA instead of flip-flop, **please mind that this buffer does not have an async reset**.
 ```{important}
  [global_buffer_bram.v](https://raw.githubusercontent.com/nycu-caslab/AAML2024/refs/heads/main/lab5_util/global_buffer_bram.v) for the global buffer using BRAM and the example to instantiates it.
 
@@ -110,12 +109,12 @@ void do_matmul_num(int test_num) {
 If you successfully complete the final part [Get Everything Together](#get-everything-together-50), you will automatically receive the score for this section. However, if you are unable to complete the final part, you can test this section independently and still earn the score for it.
 
 ```{important} 
-You will get **0%** if you can't pass the golden test or didn't meet the requirement, you have to pass every pattern below to get 20%.
+You will get **0%** if you can't pass the golden test or didn't meet the requirement, you have to pass the pattern below to get 20%.
 ```
 
-| Passes pattern       | Pattern 1 | Pattern 2 | Patten 3 | Pattern 4 | 4096 times 1-4|
-| -------------------  | --------- | --------- |:-------- |:--------- | ------------- |
-| cycle ct. requirement|  < 25M    | < 25M     |  < 25M   |  < 25M    |  < 40M        |
+| Passes pattern       | 4096 times 1-4 rotating|
+| -------------------  | ------------- |
+| cycle ct. requirement|  < 45M        |
 
 ## im2col for Convolution - 20%
 
