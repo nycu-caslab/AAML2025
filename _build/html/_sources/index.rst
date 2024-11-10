@@ -46,3 +46,10 @@ Lecture and Office Hours
 
     labs/*
 
+.. toctree::
+    :hidden:
+    :glob:
+    :maxdepth: 2
+    :caption: Project:
+
+    project/*
