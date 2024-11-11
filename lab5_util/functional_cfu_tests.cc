@@ -269,6 +269,7 @@ void do_matmul_num(int test_num) {
     1. Pass data to CFU.
     2. Pass matrix parameters to CFU.
     3. Receive data from CFU and place it to `C_arr`.
+        - you may use __asm volatile("NOP") to wait some cycles if unstable.
   */ 
 
   // =====================================================
