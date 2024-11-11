@@ -407,12 +407,19 @@ document.write(`
 <p class="admonition-title">Important</p>
 <ul class="simple">
 <li><p>All the pattern we use to test are 16*16 int8, that is, the M, N, K are all 16.</p></li>
-<li><p>The input layout are just like lab3, you may checkout the details in the comment of <code class="docutils literal notranslate"><span class="pre">functional_cfu_tests.cc</span></code>.</p></li>
+<li><p>The input layout are just like lab3.</p></li>
 <li><p>For the output, you are required to place it to a 2D 16*16 int32 matrix.</p></li>
 <li><p>We are using the <code class="docutils literal notranslate"><span class="pre">perf_counter</span></code> here, so make sure you <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">prog</span> <span class="pre">EXTRA_LITEX_ARGS=&quot;--cpu-variant=perf+cfu&quot;</span></code>.</p></li>
 <li><p>Or you might get stuck running patterns because you don’t have the <code class="docutils literal notranslate"><span class="pre">perf_counters</span></code> enabled.</p></li>
 </ul>
 </div>
+<p>For example, the first test case in the test (matrix A and its memory layout are just like lab3):</p>
+<p><a class="reference internal" href="../_images/A.png"><img alt="../_images/A.png" src="../_images/A.png" style="width: 600px;" /></a>   <a class="reference internal" href="../_images/TC_A.png"><img alt="../_images/TC_A.png" src="../_images/TC_A.png" style="width: 300px;" /></a></p>
+<p>matrix B and its memory layout (same as lab3):</p>
+<p><a class="reference internal" href="../_images/B.png"><img alt="../_images/B.png" src="../_images/B.png" style="width: 600px;" /></a>   <a class="reference internal" href="../_images/TC_B.png"><img alt="../_images/TC_B.png" src="../_images/TC_B.png" style="width: 300px;" /></a></p>
+<p>the answer should be :</p>
+<a class="reference internal image-reference" href="../_images/C.png"><img alt="../_images/C.png" src="../_images/C.png" style="width: 600px;" />
+</a>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">do_matmul_num</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">test_num</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// place your answer in this array!</span>
 <span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">C_arr</span><span class="p">[</span><span class="mi">16</span><span class="p">][</span><span class="mi">16</span><span class="p">];</span>

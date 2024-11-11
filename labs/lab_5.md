@@ -67,11 +67,23 @@ Tests for Functional CFUs
 3. Write the code about passing and recieving data to your accelerator from the software side in the `do_matmul_num` function of the `functional_cfu_tests.cc`.
 ```{important}
 - All the pattern we use to test are 16*16 int8, that is, the M, N, K are all 16.
-- The input layout are just like lab3, you may checkout the details in the comment of `functional_cfu_tests.cc`.
+- The input layout are just like lab3.
 - For the output, you are required to place it to a 2D 16*16 int32 matrix.
 - We are using the `perf_counter` here, so make sure you `make prog EXTRA_LITEX_ARGS="--cpu-variant=perf+cfu"`.
 - Or you might get stuck running patterns because you don't have the `perf_counters` enabled.
 ```
+For example, the first test case in the test (matrix A and its memory layout are just like lab3):
+
+<img src="images/lab5/A.png" width="600px">   <img src="images/lab5/TC_A.png" width="300px"> 
+
+matrix B and its memory layout (same as lab3):
+
+<img src="images/lab5/B.png" width="600px">   <img src="images/lab5/TC_B.png" width="300px">
+
+the answer should be :
+
+
+<img src="images/lab5/C.png" width="600px">
 
 ```c
 void do_matmul_num(int test_num) {
