@@ -29,7 +29,7 @@ endmodule
   Example of instantiating a global_buffer_bram: 
 
   global_buffer_bram #(
-    .ADDR_BITS(12), // ADDR_BITS 12 -> generates 10^12 entries
+    .ADDR_BITS(12), // ADDR_BITS 12 -> generates 2^12 entries
     .DATA_BITS(32)  // DATA_BITS 32 -> 32 bits for each entries
   )
   gbuff_A(
