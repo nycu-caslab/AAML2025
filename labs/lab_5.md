@@ -1,5 +1,10 @@
 # Lab 5 : Systolic Array with im2col for Convolution
 
+```{versionchanged} 11/17,23:40  
+Corrected `wget` command in [im2col for Convolution](#im2col-for-convolution-20):
+- Fixed an error in the previous version where `functional_cfu_tests.cc` was incorrectly get. Updated to get the correct file, `conv_test.cc`.
+```
+
 ## Goal of this lab
 ---
 - [Integrate Systolic Array to CFU Playground and Run Matmul - 20%](#integrate-systolic-array-to-cfu-playground-and-run-matmul-20)
@@ -170,6 +175,9 @@ $ cp \
 Download the unit tests for testing your implementation under your lab5 project directory:
 ```sh
 $ cd ${CFU_ROOT}/proj/lab5_proj
+$ mkdir -p src/tensorflow/lite/micro/kernels
+$ wget -P src/tensorflow/lite/micro/kernels \
+  https://github.com/nycu-caslab/AAML2024/raw/main/lab5_util/conv_test.cc
 $ wget -P src/ \
   https://github.com/nycu-caslab/AAML2024/raw/main/lab5_util/tflite_unit_tests.cc
 ```

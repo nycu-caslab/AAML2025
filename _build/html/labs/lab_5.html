@@ -341,6 +341,12 @@ document.write(`
                   
   <section id="lab-5-systolic-array-with-im2col-for-convolution">
 <h1>Lab 5 : Systolic Array with im2col for Convolution<a class="headerlink" href="#lab-5-systolic-array-with-im2col-for-convolution" title="Link to this heading">#</a></h1>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 11/17,23:40: </span>Corrected <code class="docutils literal notranslate"><span class="pre">wget</span></code> command in <a class="reference internal" href="#im2col-for-convolution-20"><span class="xref myst">im2col for Convolution</span></a>:</p>
+<ul class="simple">
+<li><p>Fixed an error in the previous version where <code class="docutils literal notranslate"><span class="pre">functional_cfu_tests.cc</span></code> was incorrectly get. Updated to get the correct file, <code class="docutils literal notranslate"><span class="pre">conv_test.cc</span></code>.</p></li>
+</ul>
+</div>
 <section id="goal-of-this-lab">
 <h2>Goal of this lab<a class="headerlink" href="#goal-of-this-lab" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
@@ -508,6 +514,9 @@ Here ‘k’ is the number of values in each patch and kernel, so it’s kernel 
 </div>
 <p>Download the unit tests for testing your implementation under your lab5 project directory:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">CFU_ROOT</span><span class="si">}</span>/proj/lab5_proj
+$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>src/tensorflow/lite/micro/kernels
+$<span class="w"> </span>wget<span class="w"> </span>-P<span class="w"> </span>src/tensorflow/lite/micro/kernels<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://github.com/nycu-caslab/AAML2024/raw/main/lab5_util/conv_test.cc
 $<span class="w"> </span>wget<span class="w"> </span>-P<span class="w"> </span>src/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>https://github.com/nycu-caslab/AAML2024/raw/main/lab5_util/tflite_unit_tests.cc
 </pre></div>

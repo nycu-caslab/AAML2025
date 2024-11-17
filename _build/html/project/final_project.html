@@ -474,18 +474,15 @@ document.write(`
 <section id="grading-policy">
 <h2>Grading Policy<a class="headerlink" href="#grading-policy" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
-<ul class="simple">
+<ul>
 <li><p>We will compare the performance of your design with our reference design (simply the SIMD in lab 2) and will not be released.</p></li>
 <li><p>ACC won’t be tested if you didn’t modify the model</p></li>
-<li><p>TA’s latency:</p></li>
-</ul>
-<div class="amsmath math notranslate nohighlight" id="equation-0fcdcd74-fbba-478e-b87a-4d08ef9f6fbc">
-<span class="eqno">(1)<a class="headerlink" href="#equation-0fcdcd74-fbba-478e-b87a-4d08ef9f6fbc" title="Permalink to this equation">#</a></span>\[\begin{gather}
+<li><p>TA’s latency:
+\begin{gather}
 \begin{aligned}
 \text{LAT}_{TA} \approx 154M \ \text{cycles} \approx 2036000 \ \mu s
 \end{aligned}
-\end{gather}\]</div>
-<ul>
+\end{gather}</p></li>
 <li><p>Latency and accuracy will be measured by the provided evaluation script (the following is the original performance).</p>
 <p><img alt="" src="../_images/measured.png" /></p>
 </li>
@@ -496,15 +493,14 @@ document.write(`
 <h2>Grading Formula<a class="headerlink" href="#grading-formula" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <ul class="simple">
-<li><p>Accuracy:</p></li>
-</ul>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{gather*}
+<li><p>Accuracy:
+\begin{gather*}
 \text{GOLD} = \begin{cases}
-1 &amp; \text{if golden test passed,} \\
+1 &amp; \text{if golden test passed,} \
 0 &amp; \text{if golden test failed}
 \end{cases}
-\end{gather*}\]</div>
+\end{gather*}</p></li>
+</ul>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{gather*}
 \text{ACC} = \min \left( \frac{\text{ACC}_{\text{student}}}{\text{ACC}_{\text{original}}}, 100\% \right)
@@ -514,12 +510,11 @@ document.write(`
 <p>Note that better ACC won’t give you better score!!</p>
 </div>
 <ul class="simple">
-<li><p>Latency</p></li>
+<li><p>Latency
+\begin{gather*}
+\text{LAT}<em>{\text{base}} = \min \left( 80 \times \frac{\text{LAT}</em>{\text{TA}}}{\text{LAT}_{\text{student}}}, 80 \right)
+\end{gather*}</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{gather*}
-\text{LAT}_{\text{base}} = \min \left( 80 \times \frac{\text{LAT}_{\text{TA}}}{\text{LAT}_{\text{student}}}, 80 \right)
-\end{gather*}\]</div>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{gather*}
 \text{LAT}_{\text{rank}} = \min \left( 20 \times \frac{\#\text{students} - \text{Rank}_{\text{student}}}{\#\text{students}}, 20 \right) \\
@@ -537,13 +532,12 @@ document.write(`
 \end{cases}
 \end{gather*}\]</div>
 <ul class="simple">
-<li><p>Final score:</p></li>
+<li><p>Final score:
+\begin{gather*}
+\text{Score} = GOLD \times ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \
+\text{(Highest score} = 1 \times 100% \times (80 + 20) - 0 = 100)
+\end{gather*}</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{gather*}
-\text{Score} = GOLD \times ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \\
-\text{(Highest score} = 1 \times 100\% \times (80 + 20) - 0 = 100)
-\end{gather*}\]</div>
 </section>
 <section id="submission">
 <h2>Submission<a class="headerlink" href="#submission" title="Link to this heading">#</a></h2>
