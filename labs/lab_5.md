@@ -170,7 +170,6 @@ $ cp \
 Download the unit tests for testing your implementation under your lab5 project directory:
 ```sh
 $ cd ${CFU_ROOT}/proj/lab5_proj
-$ mkdir -p src/tensorflow/lite/micro/kernels
 $ wget -P src/ \
   https://github.com/nycu-caslab/AAML2024/raw/main/lab5_util/tflite_unit_tests.cc
 ```
