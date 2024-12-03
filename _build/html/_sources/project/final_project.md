@@ -130,6 +130,7 @@ Note that better ACC won't give you better score!!
 ```
 
 - Latency
+
 \begin{gather*}
 \text{LAT}_{\text{base}} = \min \left( 80 \times \frac{\text{LAT}_{\text{TA}}}{\text{LAT}_{\text{student}}}, 80 \right)
 \end{gather*}
