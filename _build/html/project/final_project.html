@@ -358,6 +358,11 @@ document.write(`
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/nycu-caslab/AAML2024-project.git
 </pre></div>
 </div>
+<p>Then run the setup script</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd ${CFU_ROOT}
+$ ./scripts/setup
+</pre></div>
+</div>
 <p>Final project template path: <code class="docutils literal notranslate"><span class="pre">${CFU_ROOT}/proj/AAML_final_proj</span></code></p>
 <ul class="simple">
 <li><p>Dependency (python): pyserial, tdqm</p></li>
@@ -474,18 +479,15 @@ document.write(`
 <section id="grading-policy">
 <h2>Grading Policy<a class="headerlink" href="#grading-policy" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
-<ul class="simple">
+<ul>
 <li><p>We will compare the performance of your design with our reference design (simply the SIMD in lab 2) and will not be released.</p></li>
 <li><p>ACC won’t be tested if you didn’t modify the model</p></li>
-<li><p>TA’s latency:</p></li>
-</ul>
-<div class="amsmath math notranslate nohighlight" id="equation-8b6a1925-9528-433d-a2cc-6e69595b3833">
-<span class="eqno">(1)<a class="headerlink" href="#equation-8b6a1925-9528-433d-a2cc-6e69595b3833" title="Permalink to this equation">#</a></span>\[\begin{gather}
+<li><p>TA’s latency:
+\begin{gather}
 \begin{aligned}
 \text{LAT}_{TA} \approx 154M \ \text{cycles} \approx 2036000 \ \mu s
 \end{aligned}
-\end{gather}\]</div>
-<ul>
+\end{gather}</p></li>
 <li><p>Latency and accuracy will be measured by the provided evaluation script (the following is the original performance).</p>
 <p><img alt="" src="../_images/measured.png" /></p>
 </li>
@@ -496,15 +498,14 @@ document.write(`
 <h2>Grading Formula<a class="headerlink" href="#grading-formula" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <ul class="simple">
-<li><p>Accuracy:</p></li>
-</ul>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{gather*}
+<li><p>Accuracy:
+\begin{gather*}
 \text{GOLD} = \begin{cases}
-1 &amp; \text{if golden test passed,} \\
+1 &amp; \text{if golden test passed,} \
 0 &amp; \text{if golden test failed}
 \end{cases}
-\end{gather*}\]</div>
+\end{gather*}</p></li>
+</ul>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{gather*}
 \text{ACC} = \min \left( \frac{\text{ACC}_{\text{student}}}{\text{ACC}_{\text{original}}}, 100\% \right)
@@ -538,13 +539,12 @@ document.write(`
 \end{cases}
 \end{gather*}\]</div>
 <ul class="simple">
-<li><p>Final score:</p></li>
+<li><p>Final score:
+\begin{gather*}
+\text{Score} = GOLD \times ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \
+\text{(Highest score} = 1 \times 100% \times (80 + 20) - 0 = 100)
+\end{gather*}</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{gather*}
-\text{Score} = GOLD \times ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \\
-\text{(Highest score} = 1 \times 100\% \times (80 + 20) - 0 = 100)
-\end{gather*}\]</div>
 </section>
 <section id="submission">
 <h2>Submission<a class="headerlink" href="#submission" title="Link to this heading">#</a></h2>

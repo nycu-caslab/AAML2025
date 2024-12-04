@@ -20,6 +20,11 @@ Clone the fork of final project to get the final project template
 ```
 $ git clone https://github.com/nycu-caslab/AAML2024-project.git
 ```
+Then run the setup script
+```
+$ cd ${CFU_ROOT}
+$ ./scripts/setup
+```
 Final project template path: `${CFU_ROOT}/proj/AAML_final_proj`
 - Dependency (python): pyserial, tdqm 
 
