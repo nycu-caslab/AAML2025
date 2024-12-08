@@ -1,6 +1,9 @@
 # Final Project: MLPerf™ Tiny
 
-
+```{versionchanged} 12/8,19:05
+[Grading Formula](#grading-formula) update:
+- It is okay now for not passing the golden test, as long as you can keep the accuracy higher than 75%.
+```
 
 ## Introduction
 ----
@@ -54,7 +57,8 @@ No other source code in `${CFU_ROOT}/common/**` and `${CFU_ROOT}/third_party/**`
 ```
 
 ### Golden Test
-Secondly, your design should pass the golden test. 
+You may use the golden to verify your design, but note that there are flexibility for your accuracy, so you may or may not reference on this test as long as your accuracy is larger than 75%.
+
 * After `make prog && make load`, input `11g` to run golden test of MLPerf Tiny imgc model. The result should be like:  
 ![](images/golden.png)
 
@@ -120,17 +124,15 @@ You will receive 0 point if you don't present your work
 ----
 - Accuracy:
 \begin{gather*}
-\text{GOLD} = \begin{cases}
-1 & \text{if golden test passed,} \\
+\text{ACC} = \begin{cases}
+\min \left( \frac{\text{ACC}_{\text{student}}}{\text{ACC}_{\text{original}}}, 100\% \right) & \text{if } {\text{ACC}_{\text{student}}} \text{≥ 75%} \\
 
 
-0 & \text{if golden test failed}
+0 & \text{if } {\text{ACC}_{\text{student}}} \text{< 75%}
 \end{cases}
 \end{gather*}
 
-\begin{gather*}
-\text{ACC} = \min \left( \frac{\text{ACC}_{\text{student}}}{\text{ACC}_{\text{original}}}, 100\% \right)
-\end{gather*}
+
 
 ```{important}
 Note that better ACC won't give you better score!!
@@ -162,7 +164,7 @@ Note that better ACC won't give you better score!!
 
 - Final score:
 \begin{gather*}
-\text{Score} = GOLD \times ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \\
+\text{Score} = ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \\
 
 \text{(Highest score} = 1 \times 100\% \times (80 + 20) - 0 = 100)
 \end{gather*}
@@ -178,6 +180,5 @@ Please fork the repo and push your work to it
     - Clone your fork
     - Apply your custom model if needed
     - `make prog && make load`
-    - Run golden test
     - Run evaluation script
     - Record measurements

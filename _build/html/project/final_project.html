@@ -340,6 +340,12 @@ document.write(`
                   
   <section id="final-project-mlperf-tiny">
 <h1>Final Project: MLPerf™ Tiny<a class="headerlink" href="#final-project-mlperf-tiny" title="Link to this heading">#</a></h1>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 12/8,19:05: </span><a class="reference internal" href="#grading-formula"><span class="xref myst">Grading Formula</span></a> update:</p>
+<ul class="simple">
+<li><p>It is okay now for not passing the golden test, as long as you can keep the accuracy higher than 75%.</p></li>
+</ul>
+</div>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
@@ -406,7 +412,7 @@ $ ./scripts/setup
 </section>
 <section id="golden-test">
 <h3>Golden Test<a class="headerlink" href="#golden-test" title="Link to this heading">#</a></h3>
-<p>Secondly, your design should pass the golden test.</p>
+<p>You may use the golden to verify your design, but note that there are flexibility for your accuracy, so you may or may not reference on this test as long as your accuracy is larger than 75%.</p>
 <ul class="simple">
 <li><p>After <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">prog</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">load</span></code>, input <code class="docutils literal notranslate"><span class="pre">11g</span></code> to run golden test of MLPerf Tiny imgc model. The result should be like:<br />
 <img alt="" src="../_images/golden.png" /></p></li>
@@ -484,8 +490,8 @@ $ ./scripts/setup
 <li><p>ACC won’t be tested if you didn’t modify the model</p></li>
 <li><p>TA’s latency:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-1d56eb27-7779-43b6-b994-ea7102935b09">
-<span class="eqno">(1)<a class="headerlink" href="#equation-1d56eb27-7779-43b6-b994-ea7102935b09" title="Permalink to this equation">#</a></span>\[\begin{gather}
+<div class="amsmath math notranslate nohighlight" id="equation-1bb97557-53fd-4ebf-a71d-1192b5eb5444">
+<span class="eqno">(1)<a class="headerlink" href="#equation-1bb97557-53fd-4ebf-a71d-1192b5eb5444" title="Permalink to this equation">#</a></span>\[\begin{gather}
 \begin{aligned}
 \text{LAT}_{TA} \approx 154M \ \text{cycles} \approx 2036000 \ \mu s
 \end{aligned}
@@ -505,16 +511,12 @@ $ ./scripts/setup
 </ul>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{gather*}
-\text{GOLD} = \begin{cases}
-1 &amp; \text{if golden test passed,} \\
+\text{ACC} = \begin{cases}
+\min \left( \frac{\text{ACC}_{\text{student}}}{\text{ACC}_{\text{original}}}, 100\% \right) &amp; \text{if } {\text{ACC}_{\text{student}}} \text{≥ 75%} \\
 
 
-0 &amp; \text{if golden test failed}
+0 &amp; \text{if } {\text{ACC}_{\text{student}}} \text{&lt; 75%}
 \end{cases}
-\end{gather*}\]</div>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{gather*}
-\text{ACC} = \min \left( \frac{\text{ACC}_{\text{student}}}{\text{ACC}_{\text{original}}}, 100\% \right)
 \end{gather*}\]</div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -549,7 +551,7 @@ $ ./scripts/setup
 </ul>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{gather*}
-\text{Score} = GOLD \times ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \\
+\text{Score} = ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \\
 
 \text{(Highest score} = 1 \times 100\% \times (80 + 20) - 0 = 100)
 \end{gather*}\]</div>
@@ -570,7 +572,6 @@ $ ./scripts/setup
 <li><p>Clone your fork</p></li>
 <li><p>Apply your custom model if needed</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">prog</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">load</span></code></p></li>
-<li><p>Run golden test</p></li>
 <li><p>Run evaluation script</p></li>
 <li><p>Record measurements</p></li>
 </ul>
