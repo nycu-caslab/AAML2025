@@ -122,6 +122,8 @@ You will receive 0 point if you don't present your work
 \begin{gather*}
 \text{GOLD} = \begin{cases}
 1 & \text{if golden test passed,} \\
+
+
 0 & \text{if golden test failed}
 \end{cases}
 \end{gather*}
@@ -161,6 +163,7 @@ Note that better ACC won't give you better score!!
 - Final score:
 \begin{gather*}
 \text{Score} = GOLD \times ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \\
+
 \text{(Highest score} = 1 \times 100\% \times (80 + 20) - 0 = 100)
 \end{gather*}
 
