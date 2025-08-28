@@ -10,6 +10,13 @@ Instructor
 Teaching assistants
 *******************
 
+**Yin-Hsien, Liu**
+
+* Discord ID: Hsien
+* yinhsien901005 [at] gmail.com
+* Location: EC619
+
+
 **Wei-Hsiang Lu**
 
 * Discord ID: rrr123
