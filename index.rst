@@ -16,7 +16,7 @@ Lecture and Office Hours
    +--------------------+------------------------------+-----------------------------------------------------------+
    | Office Hours       | 9:00  - 10:00    (Thur.)     | EC-516                                                    |
    +--------------------+------------------------------+-----------------------------------------------------------+
-   | Lecture Website    | `Link <https://people.cs.nycu.edu.tw/~ttyeh/course/2024_Fall/IOC5009/outline.html>`_     |
+   | Lecture Website    | `Link <https://people.cs.nycu.edu.tw/~ttyeh/course/2025_Fall/IOC5009/outline.html>`_     |
    +--------------------+------------------------------------------------------------------------------------------+
 
 .. important::
@@ -46,10 +46,10 @@ Lecture and Office Hours
 
     labs/*
 
-.. toctree::
-    :hidden:
-    :glob:
-    :maxdepth: 2
-    :caption: Project:
+.. .. toctree::
+..     :hidden:
+..     :glob:
+..     :maxdepth: 2
+..     :caption: Project:
 
-    project/*
+..     project/*
