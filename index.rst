@@ -28,7 +28,7 @@ Lecture and Office Hours
   
   If you have any course-related questions, please try to ask directly in the Discord channel rather than emailing the TAs. For issues related to grades or other privacy concerns, you can either send a private message to the TAs on Discord or email them.
   
-  `Invitation Link <https://discord.gg/AnXZycwqVX>`_
+  `Invitation Link <https://discord.gg/Gb86Vu2cNr>`_
 
 .. toctree::
     :hidden:
