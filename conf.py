@@ -18,7 +18,7 @@
 
 project = 'Accelerator Architectures for Machine Learning'
 html_title = 'CSIC30066: Accelerator Architectures for Machine Learning'
-copyright = '2024, NYCU CAS-Lab'
+copyright = '2025, NYCU CAS-Lab'
 author = ' NYCU CAS-Lab'
 
 # -- General configuration ---------------------------------------------------
