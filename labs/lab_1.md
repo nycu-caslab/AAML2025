@@ -14,7 +14,8 @@ The CFU Playground is a handy frameworks composed of soft RISC-V SoC and platfor
 ## Setting up the CFU-Playground Environment - 20%
 ----
 ```{note}
-For WSL (Windows Subsystem for Linux) users, the package [usbipd-win](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) may be necessary to connect USB devices to WSL.
+Since the specifications in this course are designed for Linux environments, we strongly recommend Windows users to use WSL (Windows Subsystem for Linux).
+For WSL users, the package [usbipd-win](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) may be necessary to connect USB devices to WSL.
 ```
 ### 1. Get the supported board 
 [Nexys A7-100T](https://digilent.com/reference/programmable-logic/nexys-a7/start) is used in this course, contact the TAs if you haven't get one.
