@@ -96,8 +96,9 @@ If you have the licence of `VCS` and want faster simulation, you may use the `Ma
 | Input  | index        | 16        | The address of the sram to be read or write. |
 | Input  | data_in      | 128       | The data input to write to the SRAM          |
 | Output | data_out     | 128       | The data output from the SRAM                |
-
-
+``` {note}
+The 128-bit data input stands for 4 * 32-bit values, allowing 4 elements to be written simultaneously to the C SRAM.
+```
 #### Rules
 
 - Your TPU design (`TPU.v`) should be under the top module which provided by TA, it's fine to add various new files in the `RTL` directory.
