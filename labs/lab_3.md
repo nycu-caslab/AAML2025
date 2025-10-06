@@ -218,8 +218,6 @@ Please organize your submission files into a zip archive structured as follows:
 YourID.zip
     └── YourID/
         ├── TPU.v
-        ├── systolic_array.v
-        ├── PE.v
         └── other files you added inside the RTL directory...
 ```
 
