@@ -22,22 +22,19 @@ In this lab, we provide you a new model and the project template. Follow the ins
     The project template contains some tests and files you'll use in this lab.
     ```sh
     $ cd ${CFU_ROOT}/proj/
-    $ wget https://github.com/nycu-caslab/AAML2024/raw/main/lab4_util/lab4_template.zip
+    $ wget https://github.com/nycu-caslab/AAML2025/raw/main/lab4_util/lab4_template.zip
     $ unzip lab4_template.zip
     ```
 
     In the `/src/tensorflow/lite/micro/` directory, you’ll find tests for the Logistic and Softmax functions, along with some updated kernels for MobileViT inference. **DO NOT MODIFY** any files in this directory.
 
-    ```{versionchanged} 10/18,23:25
-    Updated the template to include modified kernels.
-    ```
 
 2. MobileViT Model
 
     This is the model we aim to accelerate. We will use this model to benchmark the performance of your design.
     ```sh
     $ cd ${CFU_ROOT}/common/src/models
-    $ wget https://github.com/nycu-caslab/AAML2024/raw/main/lab4_util/lab4_model.zip
+    $ wget https://github.com/nycu-caslab/AAML2025/raw/main/lab4_util/lab4_model.zip
     $ unzip lab4_model.zip
     ```
 
@@ -175,7 +172,8 @@ Next, trace the code of the Logistic function to identify the **complex mathemat
 Make sure to present your findings to the TAs during the demo.
 ```{hint}
 You can start tracing the code from this file, and the model will use the topmost overloaded `Logistic(...)` function:  
-`CFU-Playground/third_party/tflite-micro/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h`  
+`CFU-Playground/third_party/tflite-micro/tensorflow\
+/lite/kernels/internal/reference/integer_ops/logistic.h`  
 Then, you will find the mathematical computations are defined in:  
 `CFU-Playground/third_party/tflite-micro/third_party/gemmlowp/fixedpoint/fixedpoint.h`
 ```
@@ -231,41 +229,11 @@ You will get **0%** if you can't pass all `LOGISTIC TEST` in the `Project menu`.
 ```{note}
 **You are not required to follow to the provided guide below**. Instead, feel free to use any method to accelerate the inference of Logistic function, provided that it passes the unit test.
 ```
-First of all, it is essential to familiarize yourself with **fixed-point** arithmetic and the `FixedPoint` class defined in `fixedpoint.h`. The key components and functions you are likely to use within the `FixedPoint` class include `kIntegerBits`, `FromRaw()`, and `raw()`.
+First of all, it is essential to familiarize yourself with **fixed-point** arithmetic and the `FixedPoint` class defined in `fixedpoint.h`  ( Part 2: the FixedPoint class ). The key components and functions you are likely to use within the `FixedPoint` class include `kIntegerBits`, `FromRaw()`, and `raw()`.
 
 Additionally, You can refer to [Wikipedia - Q format notation](https://en.wikipedia.org/wiki/Q_(number_format)) and the comments for the `FixedPoint` class in `fixedpoint.h` to help you understand fixed-point arithmetic. **The [Q format converter](https://chummersone.github.io/qformat.html#converter) is also a very useful tool** that you can use to convert between fixed-point and floating-point numbers, which will definitely assist you in debugging.
 
-```cpp
-// Part 2: the FixedPoint class.
 
-// A FixedPoint object represents a fixed-point value stored in the underlying
-// integer type tRawType, if tRawType is a plain scalar integer type.
-// Alternatively, tRawType may be a SIMD type (e.g. NEON int32x4_t) in which
-// case a FixedPoint object represents a corresponding SIMD vector of fixed
-// point values.
-//
-// tIntegerBits describes the range of the fixed-point format: if
-// tIntegerBits == m then the range of representable values is the half-open
-// interval [-2^m; 2^m) where the open boundary on the right side means that
-// 2^m is not representable (how close the maximum representable value is to
-// it, depends on bit-depth of tRawType).
-//
-// In "Q format notation",
-//   https://en.wikipedia.org/wiki/Q_(number_format)
-// we are describing the format
-//   Qm.n
-// where
-//   m = tIntegerBits
-// and
-//   n = NumberOfBits(tRawType) - (m + 1)
-// Note that the (m + 1) in the above line is because we adopt the convention
-// that we count the integer bits exclusively of the sign bit; so (m + 1) is
-// the total number of integer bits inclusive of the sign bit.
-//
-// Accordingly, the number of integral representable values in our range
-//   [-2^m ; 2^m)
-// is equal to 2^(m+1).
-```
 
 After tracing the code, you may notice that the **exponential** and the **reciprocal** are the primary bottlenecks, so we can focus on accelerating these two operations in this function.  
 `third_party/gemmlowp/fixedpoint/fixedpoint.h`
@@ -301,7 +269,7 @@ Given the symmetry of the Logistic function, it's only necessary to consider eit
 For the hardware unit section, it’s important to first familiarize yourself with the **val/rdy interface** of the CFU. In Lab 2, the calculation required only a single cycle, making it straightforward to handle. However, in this lab, your CFU operations may take more than one cycle to complete. To better understand how to manage multi-cycle operations, refer to this article for examples and guidance.
 > [Details and Use Cases of the CPU <-> CFU interface](https://cfu-playground.readthedocs.io/en/latest/interface.html)
 
-For calculating results using hardware, you have the option to employ either a Lookup Table or Mathematical Approximation methods, such as the Taylor Series, Newton-Raphson division, or Polynomial Approximation.
+For calculating results using hardware, you have the option to employ either a Lookup Table or Mathematical Approximation methods, such as the Taylor Series, Newton-Raphson division.
 
 In this lab, for the **exponential function, we recommend using either a Lookup Table or the Taylor Series**. For the **reciprocal function, we suggest using a Lookup Table or the Newton-Raphson division method**, similar to the approach used in `one_over_one_plus_x_for_x_in_0_1()`, but implemented in hardware.
 
