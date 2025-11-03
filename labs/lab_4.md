@@ -340,7 +340,8 @@ YourID.zip
         │    ├── folder... 
         │    └── files...
         ├── cfu.v
-        └── Makefile
+        ├── Makefile
+        └── Other files needed for compilation...
 ```
 
 ```{important}
