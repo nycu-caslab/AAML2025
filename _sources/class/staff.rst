@@ -10,7 +10,7 @@ Instructor
 Teaching assistants
 *******************
 
-**Yin-Hsien, Liu**
+**Yin-Hsien Liu**
 
 * Discord ID: Hsien
 * yinhsien901005 [at] gmail.com
