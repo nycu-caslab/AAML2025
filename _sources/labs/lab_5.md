@@ -1,9 +1,5 @@
 # Lab 5 : Systolic Array with im2col for Convolution
 
-```{versionchanged} 11/17,23:40  
-Corrected `wget` command in [im2col for Convolution](#im2col-for-convolution-20):
-- Fixed an error in the previous version where `functional_cfu_tests.cc` was incorrectly get. Updated to get the correct file, `conv_test.cc`.
-```
 
 ## Goal of this lab
 ---
@@ -30,7 +26,7 @@ The matrix data needs to be transmitted from the CPU to the global buffers A and
 
 The key word spotting model we intend to accelerate uses int8, and since negative values occur during computation, we need to modify it to support operations with signed integers.
 
-You may use the below command under the lab 3 directory `AAML2024-Lab3/` to make sure it can deal with ***signed*** int8 correctly.
+You may use the below command under the lab 3 directory `AAML2025-Lab3/` to make sure it can deal with ***signed*** int8 correctly.
 ```
 $ make verif_signed
 ```
@@ -43,7 +39,7 @@ Now you are ready to do the intergration! Create a new project folder just like 
 
 As shown in the block diagram, we will also be intergrating global buffer A, B and C into the CFU, we have provide a global buffer that utilises the BRAM resources of the FPGA instead of flip-flop, **please mind that this buffer does not have an async reset**.
 ```{important}
- [global_buffer_bram.v](https://raw.githubusercontent.com/nycu-caslab/AAML2024/refs/heads/main/lab5_util/global_buffer_bram.v) for the global buffer using BRAM and the example to instantiates it.
+ [global_buffer_bram.v](https://raw.githubusercontent.com/nycu-caslab/AAML2025/refs/heads/main/lab5_util/global_buffer_bram.v) for the global buffer using BRAM and the example to instantiates it.
 
 It's totally fine if you want to use something else instead of using this BRAM buffer and example, as long as you can integrate your systolic array to into the CFU and pass the tests.
 ```
@@ -52,7 +48,7 @@ After all the hardware coding and designing the `cfu_op` to pass and recieve dat
 
 1. Run this command under the project directory to wget the golden test `functional_cfu_tests.cc` to your project
 ```
-$ wget -P src/ https://github.com/nycu-caslab/AAML2024/raw/main/lab5_util/functional_cfu_tests.cc
+$ wget -P src/ https://github.com/nycu-caslab/AAML2025/raw/main/lab5_util/functional_cfu_tests.cc
 ```
 
 2. `make clean`, `make prog EXTRA_LITEX_ARGS="--cpu-variant=perf+cfu"`, `make load` and enter `2: Functional CFU Tests` from the main menu, it shall look something like this:
@@ -177,9 +173,9 @@ Download the unit tests for testing your implementation under your lab5 project 
 $ cd ${CFU_ROOT}/proj/lab5_proj
 $ mkdir -p src/tensorflow/lite/micro/kernels
 $ wget -P src/tensorflow/lite/micro/kernels \
-  https://github.com/nycu-caslab/AAML2024/raw/main/lab5_util/conv_test.cc
+  https://github.com/nycu-caslab/AAML2025/raw/main/lab5_util/conv_test.cc
 $ wget -P src/ \
-  https://github.com/nycu-caslab/AAML2024/raw/main/lab5_util/tflite_unit_tests.cc
+  https://github.com/nycu-caslab/AAML2025/raw/main/lab5_util/tflite_unit_tests.cc
 ```
 
 ### Evaluation Criteria
@@ -286,8 +282,7 @@ YourID.zip
         │    ├── folder... 
         │    └── files...
         ├── cfu.v
-        ├── Makefile
-        └── Other files needed for compilation...
+        └── Makefile
 ```
 
 ```{important}
