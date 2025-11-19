@@ -1,147 +1,125 @@
-# Final Project: MLPerf™ Tiny
-
-```{versionchanged} 12/8,19:05
-[Grading Formula](#grading-formula) update:
-- It is okay now for not passing the golden test, as long as you can keep the accuracy higher than 75%.
-```
+# Final Project: Pruned Wav2Letter
 
 ## Introduction
 ----
-In the final project, you are required to design a CFU for MLPerf™ Tiny image classification benchmark model and targeting on decreasing latency.  
-
-Also, Your design will be benchmarked by the MLPerf™ Tiny Benchmark Framework. Here is its [Github page](https://github.com/mlcommons/tiny) for detailed information aboud MLPerf™ Tiny.
+In this final project, you are required to design a CFU to accelerate the Wav2Letter model for automatic speech recognition (ASR) tasks. The primary goal is to minimize inference latency (cycle count) while maintaining the model's accuracy.
 
 ### Selected Model
+We use a quantized version of the Wav2Letter architecture. The default implementation, provided by Arm, is pruned to 50% sparsity and quantized using the TensorFlow Model Optimization Toolkit.
 
-We use [MLPerf™ Tiny Image Classification Benchmark Model](https://github.com/mlcommons/tiny/tree/master/benchmark/training/image_classification) for the project. It is a tiny version of ResNet, consisting of Conv2D, Add, AvgPool2D, FC, and Softmax.
+You don’t need to integrate the model yourself; it is already included in the CFU template. You can inspect the model architecture using [Netron](https://netron.app/). It might provide you some inspiration for your design.
 
-You don't need to integrate the model on yourself. The model is already included in CFU. See `${CFU_ROOT}/common/src/models/mlcommons_tiny_v01/imgc/`. Also, you can inspect the architecture of the selected model with [Netron](https://netron.app/). It might provide you some inspiration for your design.
+```{note}
+The model takes a long time (**~30 minutes**) to inference the full evaluation dataset using the pure software implementation. Please start your project as soon as possible.
+```
 
 ## Setup
 ----
-Clone the fork of final project to get the final project template
+### Clone the Final Project Template
+```bash
+$ cd ${CFU_ROOT}/proj
+$ git clone https://github.com/nycu-caslab/AAML-2025-Project.git
 ```
-$ git clone https://github.com/nycu-caslab/AAML2024-project.git
+
+### Prepare the Model File
+Download the original Wav2Letter tflite model:
+```bash
+$ cd AAML-2025-Project/src/wav2letter/model
+$ wget https://github.com/ARM-software/ML-Zoo/raw/master/models/speech_recognition/wav2letter/tflite_pruned_int8/wav2letter_pruned_int8.tflite
 ```
-Then run the setup script
+Then convert the tflite file into a header file:
+```bash
+$ chmod +x model_convert.sh
+$ ./model_convert.sh
 ```
-$ cd ${CFU_ROOT}
-$ ./scripts/setup
+
+### Python Dependencies
+```bash
+$ pip install numpy pyserial tqdm jiwer
 ```
-Final project template path: `${CFU_ROOT}/proj/AAML_final_proj`
-- Dependency (python): pyserial, tdqm 
 
 ## Requirements
 ----
 ### Files
-You can modify the following files:
-* Kernel API
-    1. `tensorflow/lite/micro/kernels/add.cc`
-    2. `tensorflow/lite/micro/kernels/conv.cc`
-    3. `tensorflow/lite/micro/kernels/fully_connected.cc`
-    4. `tensorflow/lite/micro/kernels/softmax.cc`
-    5. `tensorflow/lite/micro/kernels/pooling.cc`
-
-* Kernel Implementation
-    1. `tensorflow/lite/kernels/internal/reference/integer_ops/add.h`
-    2. `tensorflow/lite/kernels/internal/reference/integer_ops/conv.h`
-    3. `tensorflow/lite/kernels/internal/reference/integer_ops/fully_connected.h`
-    4. `tensorflow/lite/kernels/internal/reference/integer_ops/softmax.h`
-    5. `tensorflow/lite/kernels/internal/reference/integer_ops/pooling.h`
-
-* HW design
-    1. `cfu.v`
+- **Modifiable files**
+    1. `src/tensorflow/lite/kernels/internal/reference/integer_ops/conv.h`
+    2. `src/tensorflow/lite/kernels/internal/reference/leaky_relu.h`
+    3. `cfu.v`
+    4. The `.tflite` model file and the generated header file. (Only if you modify the architecture)
+- **Custom files**
+    - You can add any files you need to improve your design. 
 
 ```{important}
-No other source code in `${CFU_ROOT}/common/**` and `${CFU_ROOT}/third_party/**` should be overriden unless asking for permission.
+**DO NOT MODIFY** any other source code in `${CFU_ROOT}/common/**` and `${CFU_ROOT}/third_party/**` unless permitted.
+```
+
+### Architecture
+You can modify the model architecture. But your accuracy can not be less than **72%** (see [Grading Policy](#grading-policy)).
+
+```{important}
+You are **NOT ALLOWED** to retrain the model on the provided **test dataset** (overfitting). You must ensure your model generalizes well to unseen audio. If we find this situation happened, you will receive **0 points** on the final project.
 ```
 
 ### Golden Test
-You may use the golden to verify your design, but note that there are flexibility for your accuracy, so you may or may not reference on this test as long as your accuracy is larger than 75%.
-
-* After `make prog && make load`, input `11g` to run golden test of MLPerf Tiny imgc model. The result should be like:  
-![](images/golden.png)
-
-### Architecture
-You can also modify the architecture or the parameters of the selected model. The classification accuracy of your design is evaluated.
-
-However, **DO NOT RETRAIN THE MODEL ON TESTING IMAGES**.
+You can use the golden test to verify if your implementation gives the same results as the original model.
+- How to run:
+    1. `make prog && make load`
+    2. Press `3` > `w` > `g` to run the golden test. The result should be like:
+    ![](images/golden.png)
 
 ### Performance
-We use the evaluation script to evaluate your design.
-
-* Usage:
-    * `make prog && make load` > reboot litex > turn off litex-term > run eval script
-    * `python eval_script.py` in `${CFU_ROOT}/proj/AAML_final_pro`
-        * `--port {tty_path:-/dev/ttyUSB1}`: Add this argument to select correct serial port
-
+We use a provided Python script to evaluate your design.
+- Steps:
+    1. `make prog && make load`
+    2. Reboot the LiteX.
+    3. **Close the litex-term terminal** (Critical! To free up the UART port).
+    4. Run the script:
+       ```bash
+       $ python eval.py --port /dev/ttyUSB1 (or any serial you are using)
+       ```
 The result should be like:  
 ![](images/script.png)
 
-Improve the performance of your design to decrease the latency as low as it could be.
+You need to minimize the latency as low as it could be.
 
-```{note}
-If you just want to know the latency of your design, it would be easier to run a test input instead of whole process of evaluation.
+```{Tip}
+If you just want to check the latency of your design, it would be easier to run a test input instead of whole process of evaluation.
 ```
 
-## Presentation - 30%
+## Presentation
 ----
+- You should give a presentation in the last class of this semester.
+- **Time Limit:** At most **5 minutes** per team.
+- **Content:**
+    - **Introduction**: Strategy for SW profiling & HW architecture.
+    - **Implementation**: Details of your CFU & kernel optimizations.
+    - **Evaluation**: Final accuracy & latency.
+
 ```{important}
-You will receive 0 point if you don't present your work
+You will receive a **30-point deduction** if you do not present your work.
 ```
-- The presentation takes 30% of your final project score.
-- You should give a presentation in the last class of this semester
-- Each team has 5 minutes to present at most
-- Your presentation should contains
-    - The introduction of your design
-        - SW
-        - HW
-    - (Optional) The implementation of your design
-        - SW
-        - HW
-    - The evaluation of your design
-        - Accuracy (if you modify the selected model)
-        - Latency
 
 ## Grading Policy
 ----
-- We will compare the performance of your design with our reference design (simply the SIMD in lab 2) and will not be released.
-- ACC won't be tested if you didn't modify the model
-- TA's latency:
-\begin{gather}
-\begin{aligned}
-\text{LAT}_{TA} \approx 154M \ \text{cycles} \approx 2036000 \ \mu s
-\end{aligned}
-\end{gather}
-
-- Latency and accuracy will be measured by the provided evaluation script (the following is the original performance).
-
-    ![](images/measured.png)
-
-- Ranking will be released with everyone's evaluation result after the deadline.
+- We will compare your performances against the TA's reference design (simply the SIMD in lab 2) and will not be released.
+- **Ranking:** A leaderboard will be released after the deadline.
 
 ## Grading Formula
 ----
-- Accuracy:
+### Accuracy
+
 \begin{gather*}
 \text{ACC} = \begin{cases}
-\min \left( \frac{\text{ACC}_{\text{student}}}{\text{ACC}_{\text{original}}}, 100\% \right) & \text{if } {\text{ACC}_{\text{student}}} \text{≥ 75%} \\
-
-
-0 & \text{if } {\text{ACC}_{\text{student}}} \text{< 75%}
+    1 & \text{if } {\text{ACC}_{\text{student}}} \text{≥ 72%} \\
+    0 & \text{if } {\text{ACC}_{\text{student}}} \text{< 72%}
 \end{cases}
 \end{gather*}
 
-
-
-```{important}
-Note that better ACC won't give you better score!!
+```{Note}
+Better accuracy (e.g., 90%) does **NOT** give you a higher score.
 ```
 
-- Latency
-:
-
-
+### Latency
 
 \begin{gather*}
 \text{LAT}_{\text{base}} = \min \left( 80 \times \frac{\text{LAT}_{\text{TA}}}{\text{LAT}_{\text{student}}}, 80 \right)
@@ -152,33 +130,38 @@ Note that better ACC won't give you better score!!
 \text{where } \text{Rank}_{\text{student}} \in [0, \#\text{students} - 1]
 \end{gather*}
 
-- Presentation
+### Presentation
 
 \begin{gather*}
 \text{Present} = 
 \begin{cases} 
-    -30 & \text{if you submit a plain impl of lab2 with the same performance as TA's,} \\
-    0 & \text{otherwise} 
+    -30 & \text{if you submit a plain impl of Lab 2 OR do not present} \\
+    -0 & \text{otherwise} 
 \end{cases}
 \end{gather*}
 
-- Final score:
-\begin{gather*}
-\text{Score} = ACC \times (LAT_{base} + LAT_{rank}) + \text{Present} \\
+### Final score
 
-\text{(Highest score} = 1 \times 100\% \times (80 + 20) - 0 = 100)
+\begin{gather*}
+\text{Score} = 
+\max \left( \text{ACC} \times (\text{LAT}_{\text{base}} + \text{LAT}_{\text{rank}} + \text{Present}), 0 \right) \
+\\
+(\text{Highest score} = 1 \times (80 + 20 - 0) = 100)
 \end{gather*}
 
 ## Submission
 ----
-Please fork the repo and push your work to it
-- If you use your own model:
-    - Put pretrained model under `${CFU_ROOT}/proj/AAML_final_proj` or somewhere else we can easily find it
-    - Put your training script in your final project repo and leave a message about where to find them in the README.md under your CFU project direcrtory
+- Please fork the repo and push your work to it.
+    - If you use a custom model architecture, you **MUST** follow these steps:
+        1. Explicitly state in README.md that you are using a custom model.
+        2. Upload your modified `.tflite` file and the converted `.h` file under `src/wav2letter/model`.
+        3. Also upload your training/modification scripts (if any) in the repo for verification.
+
+- **Fill in your repo link and your presentation slides link to the spreadsheet before the deadline.**
 
 - Grading workflow will be:
-    - Clone your fork
-    - Apply your custom model if needed
-    - `make prog && make load`
-    - Run evaluation script
-    - Record measurements
+    1. Clone your repo.
+    2. Apply your custom model (if specified in README).
+    3. `make prog && make load`
+    4. Run the evaluation script.
+    5. Record the metrics.
