@@ -1,8 +1,13 @@
 # Final Project: Pruned Wav2Letter
 
+```{versionchanged} 2025/11/24,20:02
+Template update:
+- The template has been revised to fix an eval bug. If you have cloned the template before this announcement, please re-clone it.
+```
+
 ## Introduction
 ----
-In this final project, you are required to design a CFU to accelerate the Wav2Letter model for automatic speech recognition (ASR) tasks. The primary goal is to minimize inference latency (cycle count) while maintaining the model's accuracy.
+In this final project, you are required to design a CFU to accelerate the Wav2Letter model for automatic speech recognition (ASR) tasks. The primary goal is to minimize inference latency while maintaining the model's accuracy.
 
 ### Selected Model
 We use a quantized version of the Wav2Letter architecture. The default implementation, provided by Arm, is pruned to 50% sparsity and quantized using the TensorFlow Model Optimization Toolkit.
@@ -10,7 +15,7 @@ We use a quantized version of the Wav2Letter architecture. The default implement
 You don’t need to integrate the model yourself; it is already included in the CFU template. You can inspect the model architecture using [Netron](https://netron.app/). It might provide you some inspiration for your design.
 
 ```{note}
-The model takes a long time (**~30 minutes**) to inference the full evaluation dataset using the pure software implementation. Please start your project as soon as possible.
+The model takes a long time (**>60 minutes**) to inference the full evaluation dataset using the pure software implementation. Please start your project as soon as possible.
 ```
 
 ## Setup
@@ -50,11 +55,11 @@ $ pip install numpy pyserial tqdm jiwer
     - You can add any files you need to improve your design. 
 
 ```{important}
-**DO NOT MODIFY** any other source code in `${CFU_ROOT}/common/**` and `${CFU_ROOT}/third_party/**` unless permitted.
+**DO NOT MODIFY** any other files in the template or in the source code under `${CFU_ROOT}/common/**` and `${CFU_ROOT}/third_party/**` unless permitted.
 ```
 
 ### Architecture
-You can modify the model architecture. But your accuracy can not be less than **72%** (see [Grading Policy](#grading-policy)).
+You can modify the model architecture. But your accuracy can not be less than **72%** (see [Grading Formula](#grading-formula)).
 
 ```{important}
 You are **NOT ALLOWED** to retrain the model on the provided **test dataset** (overfitting). You must ensure your model generalizes well to unseen audio. If we find this situation happened, you will receive **0 points** on the final project.
@@ -101,7 +106,7 @@ You will receive a **30-point deduction** if you do not present your work.
 
 ## Grading Policy
 ----
-- We will compare your performances against the TA's reference design (simply the SIMD in lab 2) and will not be released.
+- Your performance will be compared against the TA’s baseline, implemented with only the SIMD approach from Lab 2. The baseline latency will **NOT** be released.
 - **Ranking:** A leaderboard will be released after the deadline.
 
 ## Grading Formula
@@ -161,7 +166,7 @@ Better accuracy (e.g., 90%) does **NOT** give you a higher score.
 
 - Grading workflow will be:
     1. Clone your repo.
-    2. Apply your custom model (if specified in README).
+    2. Apply your custom model (if specified in README.md).
     3. `make prog && make load`
     4. Run the evaluation script.
     5. Record the metrics.
