@@ -1,8 +1,9 @@
 # Final Project: Pruned Wav2Letter
 
-```{versionchanged} 2025/11/27,17:25
-Template update:
-- The template has been revised to fix an eval bug. If you have cloned the template before this announcement, please re-clone it.
+```{danger}
+***[Update: 2025/11/27 22:10]***<br>
+The project template has been updated to fix a potential bug.
+If you have cloned the repository before this time, please delete and re-clone the repository.
 ```
 
 ## Introduction
@@ -62,7 +63,7 @@ $ pip install numpy pyserial tqdm jiwer
 You can modify the model architecture. But your accuracy can not be less than **72%** (see [Grading Formula](#grading-formula)).
 
 ```{important}
-You are **NOT ALLOWED** to retrain the model on the provided **test dataset** (overfitting). You must ensure your model generalizes well to unseen audio. If we find this situation happened, you will receive **0 points** on the final project.
+You are **NOT ALLOWED** to modify the model intentionally to fit the provided **test dataset** (overfitting). You must ensure your model generalizes well to unseen audio. If we find that this has occurred, you will receive **0 points** on the final project.
 ```
 
 ### Golden Test
@@ -156,13 +157,15 @@ Better accuracy (e.g., 90%) does **NOT** give you a higher score.
 
 ## Submission
 ----
+- **Deadline: 2025/12/24 10:00** 
+    - Your last commit will be considered as your submission time.
+    - Fill in your repo link and your presentation slides link to the spreadsheet before the deadline.
+
 - Please fork the repo and push your work to it.
     - If you use a custom model architecture, you **MUST** follow these steps:
         1. Explicitly state in README.md that you are using a custom model.
         2. Upload your modified `.tflite` file and the converted `.h` file under `src/wav2letter/model`.
         3. Also upload your training/modification scripts (if any) in the repo for verification.
-
-- **Fill in your repo link and your presentation slides link to the spreadsheet before the deadline.**
 
 - Grading workflow will be:
     1. Clone your repo.

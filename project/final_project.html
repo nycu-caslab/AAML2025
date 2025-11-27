@@ -351,11 +351,11 @@ document.write(`
                   
   <section id="final-project-pruned-wav2letter">
 <h1>Final Project: Pruned Wav2Letter<a class="headerlink" href="#final-project-pruned-wav2letter" title="Link to this heading">#</a></h1>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2025/11/27,17:25: </span>Template update:</p>
-<ul class="simple">
-<li><p>The template has been revised to fix an eval bug. If you have cloned the template before this announcement, please re-clone it.</p></li>
-</ul>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p><em><strong>[Update: 2025/11/27 22:10]</strong></em><br>
+The project template has been updated to fix a potential bug.
+If you have cloned the repository before this time, please delete and re-clone the repository.</p>
 </div>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
@@ -431,7 +431,7 @@ $<span class="w"> </span>./model_convert.sh
 <p>You can modify the model architecture. But your accuracy can not be less than <strong>72%</strong> (see <a class="reference internal" href="#grading-formula"><span class="xref myst">Grading Formula</span></a>).</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>You are <strong>NOT ALLOWED</strong> to retrain the model on the provided <strong>test dataset</strong> (overfitting). You must ensure your model generalizes well to unseen audio. If we find this situation happened, you will receive <strong>0 points</strong> on the final project.</p>
+<p>You are <strong>NOT ALLOWED</strong> to modify the model intentionally to fit the provided <strong>test dataset</strong> (overfitting). You must ensure your model generalizes well to unseen audio. If we find that this has occurred, you will receive <strong>0 points</strong> on the final project.</p>
 </div>
 </section>
 <section id="golden-test">
@@ -555,6 +555,12 @@ $<span class="w"> </span>./model_convert.sh
 <h2>Submission<a class="headerlink" href="#submission" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <ul class="simple">
+<li><p><strong>Deadline: 2025/12/24 10:00</strong></p>
+<ul>
+<li><p>Your last commit will be considered as your submission time.</p></li>
+<li><p>Fill in your repo link and your presentation slides link to the spreadsheet before the deadline.</p></li>
+</ul>
+</li>
 <li><p>Please fork the repo and push your work to it.</p>
 <ul>
 <li><p>If you use a custom model architecture, you <strong>MUST</strong> follow these steps:</p>
@@ -566,7 +572,6 @@ $<span class="w"> </span>./model_convert.sh
 </li>
 </ul>
 </li>
-<li><p><strong>Fill in your repo link and your presentation slides link to the spreadsheet before the deadline.</strong></p></li>
 <li><p>Grading workflow will be:</p>
 <ol class="arabic simple">
 <li><p>Clone your repo.</p></li>
