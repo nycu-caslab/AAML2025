@@ -1,6 +1,6 @@
 # Final Project: Pruned Wav2Letter
 
-```{versionchanged} 2025/11/24,20:02
+```{versionchanged} 2025/11/27,17:25
 Template update:
 - The template has been revised to fix an eval bug. If you have cloned the template before this announcement, please re-clone it.
 ```
