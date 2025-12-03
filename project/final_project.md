@@ -95,11 +95,12 @@ If you just want to check the latency of your design, it would be easier to run 
 ## Presentation
 ----
 - You should give a presentation in the last class of this semester.
-- **Time Limit:** At most **5 minutes** per team.
-- **Content:**
-    - **Introduction**: Strategy for SW profiling & HW architecture.
-    - **Implementation**: Details of your CFU & kernel optimizations.
-    - **Evaluation**: Final accuracy & latency.
+    - **2025/12/24(Wen.)**, starting at **10:10**.
+- Time Limit: At most **5 minutes** per team.
+- Content:
+    - Introduction: Strategy for SW profiling & HW architecture.
+    - Implementation: Details of your CFU & kernel optimizations.
+    - Evaluation: Final accuracy & latency.
 
 ```{important}
 You will receive a **30-point deduction** if you do not present your work.
